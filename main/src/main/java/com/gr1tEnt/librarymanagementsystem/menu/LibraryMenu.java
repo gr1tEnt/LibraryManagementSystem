@@ -17,11 +17,43 @@ public class LibraryMenu {
 
             switch (choice) {
                 case 1:
-
+                    bookManagement(scanner);
+                case 2:
+                    searchBooks(scanner);
             }
 
         } while (choice != 0);
         scanner.close();
+    }
+
+    public static void bookManagement(Scanner scanner) {
+        System.out.println("\nBook Management");
+        System.out.println("1. Add new books");
+        System.out.println("2. Update book information");
+        System.out.println("3. Remove books");
+        System.out.println("4. Track book copies");
+        System.out.println("5. Mark books as damaged/lost");
+        System.out.println("6. Show all books");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 1:
+                System.out.println("New book added!");
+            case 2:
+                System.out.println("Book information has been updated!");
+            case 3:
+                System.out.println("Books removed!");
+            case 4:
+                System.out.println("Number of copies of books: ");
+            case 5:
+                System.out.println("These books were marked as lost/damaged");
+            case 6:
+                System.out.println("All books: ");
+            default:
+                System.out.println("Incorrect choice");
+        }
     }
 
     public static void searchBooks(Scanner scanner) {
@@ -52,6 +84,8 @@ public class LibraryMenu {
                 System.out.println("Enter publication year for searching: ");
             case 7:
                 System.out.println("All books: ");
+            default:
+                System.out.println("Incorrect choice");
         }
     }
 }
