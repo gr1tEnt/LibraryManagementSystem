@@ -35,7 +35,7 @@ public class Book {
     private String shelfLocation;
 
     @Column(nullable = false)
-    private String status;
+    private Status status;
 
     public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Genre category) {
         this.id = id;
@@ -44,7 +44,7 @@ public class Book {
         this.authors = authors;
         this.publisher = publisher;
         this.publicationYear = publicationYear;
-        this.status = "Available";
+        this.status = Status.Available;
         this.category = category;
         this.numberOfCopies = 0;
     }
@@ -123,11 +123,11 @@ public class Book {
         this.shelfLocation = shelfLocation;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 }
