@@ -37,6 +37,18 @@ public class Book {
     @Column(nullable = false)
     private String status;
 
+    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Genre category) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.authors = authors;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+        this.status = "Available";
+        this.category = category;
+        this.numberOfCopies = 0;
+    }
+
     public Book() {}
 
     public Long getId() {
