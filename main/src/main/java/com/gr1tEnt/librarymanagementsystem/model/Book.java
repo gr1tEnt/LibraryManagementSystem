@@ -1,4 +1,4 @@
-package com.gr1tEnt.librarymanagementsystem;
+package com.gr1tEnt.librarymanagementsystem.model;
 import jakarta.persistence.*;
 import java.util.Set;
 
