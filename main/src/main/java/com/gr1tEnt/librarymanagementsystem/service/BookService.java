@@ -2,6 +2,7 @@ package com.gr1tEnt.librarymanagementsystem.service;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Genre;
+import com.gr1tEnt.librarymanagementsystem.model.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,18 @@ public class BookService {
     }
 
     public static void removeBook(int bookId) {
-        if (bookId > 0 && bookId < books.size()) {
+        if (bookId >= 0 && bookId <=  books.size()) {
             books.remove(bookId);
+        } else {
+            System.out.println("Invalid book's ID. Please try again");
+        }
+    }
+
+    public static void setStatus(int bookId, Status status) {
+        if (bookId >= 0 && bookId <= books.size()) {
+            Book book = books.get(bookId);
+            book.setStatus(status);
+            System.out.println("The book has changed its status" + book);
         } else {
             System.out.println("Invalid book's ID. Please try again");
         }
