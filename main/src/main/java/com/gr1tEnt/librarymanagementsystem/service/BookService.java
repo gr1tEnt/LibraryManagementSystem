@@ -34,4 +34,7 @@ public class BookService {
             System.out.println("Invalid book's ID. Please try again");
         }
     }
+    public static List<Book> getAllBooks() {
+        return books;
+    }
 }

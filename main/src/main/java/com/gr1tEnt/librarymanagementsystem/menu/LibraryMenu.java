@@ -4,6 +4,7 @@ import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -62,7 +63,7 @@ public class LibraryMenu {
                 System.out.println("These books were marked as lost/damaged");
                 break;
             case 6:
-                System.out.println("All books: ");
+                printAllBooks(BookService.getAllBooks());
                 break;
             default:
                 System.out.println("Incorrect choice");
@@ -128,5 +129,11 @@ public class LibraryMenu {
         Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
 
         System.out.println("Your new book: " + book);
+    }
+
+    public static void printAllBooks(List<Book> books) {
+        for(Book book : books) {
+            System.out.println(book);
+        }
     }
 }
