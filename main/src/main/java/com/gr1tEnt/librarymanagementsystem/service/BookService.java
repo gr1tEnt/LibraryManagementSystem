@@ -15,4 +15,12 @@ public class BookService {
         books.add(book);
         return book;
     }
+
+    public static void removeBook(int bookId) {
+        if (bookId > 0 && bookId < books.size()) {
+            books.remove(bookId);
+        } else {
+            System.out.println("Invalid book's ID. Please try again");
+        }
+    }
 }
