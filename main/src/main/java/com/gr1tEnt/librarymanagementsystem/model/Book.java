@@ -7,6 +7,22 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", authors=" + authors +
+                ", publisher='" + publisher + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", category='" + category + '\'' +
+                ", numberOfCopies=" + numberOfCopies +
+                ", shelfLocation='" + shelfLocation + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     @Column(nullable = false, unique = true)
     private String isbn;
 
@@ -26,7 +42,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Genre category;
+    private String category;
 
     @Column(nullable = false)
     private int numberOfCopies;
@@ -37,7 +53,7 @@ public class Book {
     @Column(nullable = false)
     private Status status;
 
-    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Genre category) {
+    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, String category) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -99,11 +115,11 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public Genre getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Genre category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

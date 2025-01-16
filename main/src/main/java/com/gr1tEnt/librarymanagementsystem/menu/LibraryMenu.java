@@ -1,11 +1,16 @@
 package com.gr1tEnt.librarymanagementsystem.menu;
 
+import com.gr1tEnt.librarymanagementsystem.model.Book;
+import com.gr1tEnt.librarymanagementsystem.service.BookService;
+
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.Set;
 
 public class LibraryMenu {
-    Scanner scanner = new Scanner(System.in);
-    int choice;
-    public void start() {
+    static Scanner scanner = new Scanner(System.in);
+    static int choice;
+    public static void start() {
         do {
             System.out.println("1. Book Management");
             System.out.println("2. Book Search by Properties");
@@ -18,8 +23,10 @@ public class LibraryMenu {
             switch (choice) {
                 case 1:
                     bookManagement(scanner);
+                    break;
                 case 2:
                     searchBooks(scanner);
+                    break;
             }
 
         } while (choice != 0);
@@ -40,17 +47,23 @@ public class LibraryMenu {
 
         switch (choice) {
             case 1:
-                System.out.println("New book added!");
+                addNewBook();
+                break;
             case 2:
                 System.out.println("Book information has been updated!");
+                break;
             case 3:
                 System.out.println("Books removed!");
+                break;
             case 4:
                 System.out.println("Number of copies of books: ");
+                break;
             case 5:
                 System.out.println("These books were marked as lost/damaged");
+                break;
             case 6:
                 System.out.println("All books: ");
+                break;
             default:
                 System.out.println("Incorrect choice");
         }
@@ -87,5 +100,33 @@ public class LibraryMenu {
             default:
                 System.out.println("Incorrect choice");
         }
+    }
+    public static void addNewBook() {
+        System.out.println("Enter ID: ");
+        Long id = scanner.nextLong();
+        scanner.nextLine();
+
+        System.out.println("Enter ISBN: ");
+        String isbn = scanner.nextLine();
+
+        System.out.println("Enter title: ");
+        String title = scanner.nextLine();
+
+        System.out.println("Enter authors: ");
+        Set<String> authors = Collections.singleton(scanner.nextLine());
+
+        System.out.println("Enter publisher: ");
+        String publisher = scanner.nextLine();
+
+        System.out.println("Enter year of publication: ");
+        int publicationYear = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("Enter category: ");
+        String category = scanner.nextLine(); // I'll change categories to enum
+
+        Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
+
+        System.out.println("Your new book: " + book);
     }
 }
