@@ -3,10 +3,7 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class LibraryMenu {
     static Scanner scanner = new Scanner(System.in);
@@ -18,6 +15,7 @@ public class LibraryMenu {
             System.out.println("3. Member Management");
             System.out.println("4. Transaction Management");
             System.out.println("5. Report Generation");
+            System.out.println("6. Exit");
             choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -30,7 +28,7 @@ public class LibraryMenu {
                     break;
             }
 
-        } while (choice != 0);
+        } while (choice != 6);
         scanner.close();
     }
 
@@ -54,7 +52,7 @@ public class LibraryMenu {
                 System.out.println("Book information has been updated!");
                 break;
             case 3:
-                System.out.println("Books removed!");
+                removeBook();
                 break;
             case 4:
                 System.out.println("Number of copies of books: ");
@@ -131,9 +129,19 @@ public class LibraryMenu {
         System.out.println("Your new book: " + book);
     }
 
-    public static void printAllBooks(List<Book> books) {
-        for(Book book : books) {
+    public static void printAllBooks(Map<Long, Book> books) {
+        for(Book book : books.values()) {
             System.out.println(book);
+        }
+    }
+    public static void removeBook() {
+        System.out.println("Enter book's ID to remove: ");
+        long bookId = scanner.nextLong();
+        boolean isRemoved = BookService.removeBook(bookId);
+        if (isRemoved) {
+            System.out.println("The book with ID " + bookId + " was removed.");
+        } else {
+            System.out.println("No book found with ID " + bookId + ".");
         }
     }
 }
