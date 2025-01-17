@@ -61,7 +61,7 @@ public class LibraryMenu {
                 System.out.println("These books were marked as lost/damaged");
                 break;
             case 6:
-                printAllBooks(BookService.getAllBooks());
+                printAllBooks(BookService.  getAllBooks());
                 break;
             default:
                 System.out.println("Incorrect choice");
@@ -130,8 +130,13 @@ public class LibraryMenu {
     }
 
     public static void printAllBooks(Map<Long, Book> books) {
-        for(Book book : books.values()) {
-            System.out.println(book);
+        if (books.isEmpty()) {
+            System.out.println("No books available in the library.");
+        } else {
+            System.out.println("Listing all books: ");
+            for (Book book : books.values()) {
+                System.out.println(book);
+            }
         }
     }
     public static void removeBook() {
