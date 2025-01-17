@@ -60,7 +60,7 @@ public class Book {
         this.authors = authors;
         this.publisher = publisher;
         this.publicationYear = publicationYear;
-        this.status = Status.Available;
+        this.status = Status.AVAILABLE;
         this.category = category;
         this.numberOfCopies = 0;
     }

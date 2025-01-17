@@ -1,6 +1,7 @@
 package com.gr1tEnt.librarymanagementsystem.menu;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
+import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
@@ -38,7 +39,7 @@ public class LibraryMenu {
         System.out.println("2. Update book information");
         System.out.println("3. Remove books");
         System.out.println("4. Track book copies");
-        System.out.println("5. Mark books as damaged/lost");
+        System.out.println("5. Set new status");
         System.out.println("6. Show all books");
 
         int choice = scanner.nextInt();
@@ -58,7 +59,7 @@ public class LibraryMenu {
                 System.out.println("Number of copies of books: ");
                 break;
             case 5:
-                System.out.println("These books were marked as lost/damaged");
+                updateStatus();
                 break;
             case 6:
                 printAllBooks(BookService.getAllBooks());
@@ -149,5 +150,22 @@ public class LibraryMenu {
             System.out.println("No book found with ID " + bookId + ".");
         }
     }
-    
+    public static void updateStatus() {
+        System.out.println("Enter book's ID: ");
+        Long bookId = scanner.nextLong();
+        scanner.nextLine();
+
+        System.out.println("Enter new status (Available, Borrowed, Reserved, Lost, Damaged): ");
+        String statusInput = scanner.nextLine();
+        try {
+            Status newStatus = Status.valueOf(statusInput.toUpperCase());
+            BookService.updateBookStatus(bookId, newStatus);
+
+            System.out.println("The status has been updated!");
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid status. Please enter one the following: Available, Borrowed, Reserved, Lost, Damaged.");
+        }
+    }
+
 }
