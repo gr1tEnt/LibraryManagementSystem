@@ -26,16 +26,19 @@ public class BookService {
         }
     }
 
-    public static void setStatus(long bookId, Status status) {
-        if (bookId >= 0 && bookId <= books.size()) {
-            Book book = books.get(bookId);
-            book.setStatus(status);
-            System.out.println("The book has changed its status" + book);
-        } else {
-            System.out.println("Invalid book's ID. Please try again");
-        }
-    }
     public static Map<Long, Book> getAllBooks() {
         return books;
+    }
+
+    public static boolean updateBookStatus(Long id, Status newStatus) {
+        Book book = books.get(id);
+        if (book != null) {
+            book.setStatus(newStatus);
+            System.out.println("The status of the book has been updated: " + book);
+            return true;
+        } else {
+            System.out.println("Invalid book's ID. Please try again.");
+            return false;
+        }
     }
 }

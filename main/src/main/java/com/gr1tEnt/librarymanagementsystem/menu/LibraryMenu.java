@@ -61,7 +61,7 @@ public class LibraryMenu {
                 System.out.println("These books were marked as lost/damaged");
                 break;
             case 6:
-                printAllBooks(BookService.  getAllBooks());
+                printAllBooks(BookService.getAllBooks());
                 break;
             default:
                 System.out.println("Incorrect choice");
@@ -149,4 +149,5 @@ public class LibraryMenu {
             System.out.println("No book found with ID " + bookId + ".");
         }
     }
+    
 }
