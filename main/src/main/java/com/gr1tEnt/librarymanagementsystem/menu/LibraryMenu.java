@@ -34,7 +34,7 @@ public class LibraryMenu {
         scanner.close();
     }
 
-    public static void bookManagement(Scanner scanner) {
+    private static void bookManagement(Scanner scanner) {
         System.out.println("\nBook Management");
         System.out.println("1. Add new books");
         System.out.println("2. Update book information");
@@ -57,7 +57,7 @@ public class LibraryMenu {
                 removeBook();
                 break;
             case 4:
-                System.out.println("Number of copies of books: ");
+                trackCopies();
                 break;
             case 5:
                 updateStatus();
@@ -66,11 +66,12 @@ public class LibraryMenu {
                 printAllBooks(BookService.getAllBooks());
                 break;
             default:
-                System.out.println("Incorrect choice");
+                System.out.println("Incorrect choice.");
         }
     }
 
-    public static void searchBooks(Scanner scanner) {
+//Search by Properties in development
+    private static void searchBooks(Scanner scanner) {
         System.out.println("\nBook Search by Properties");
         System.out.println("1. Search by title");
         System.out.println("2. Search by author");
@@ -96,14 +97,12 @@ public class LibraryMenu {
                 System.out.println("Enter publisher for searching: ");
             case 6:
                 System.out.println("Enter publication year for searching: ");
-            case 7:
-                System.out.println("All books: ");
             default:
                 System.out.println("Incorrect choice");
         }
     }
 
-    public static void addNewBook() {
+    private static void addNewBook() {
         System.out.println("Enter ID: ");
         Long id = scanner.nextLong();
         scanner.nextLine();
@@ -120,7 +119,7 @@ public class LibraryMenu {
         String publisher = scanner.nextLine();
 
         int publicationYear = getValidYear();
-        
+
         Category category = getValidCategory();
 
         Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
@@ -128,7 +127,7 @@ public class LibraryMenu {
         System.out.println("Your new book: " + book);
     }
 
-    public static void printAllBooks(Map<Long, Book> books) {
+    private static void printAllBooks(Map<Long, Book> books) {
         if (books.isEmpty()) {
             System.out.println("No books available in the library.");
         } else {
@@ -139,7 +138,7 @@ public class LibraryMenu {
         }
     }
 
-    public static void removeBook() {
+    private static void removeBook() {
         System.out.println("Enter book's ID to remove: ");
         long bookId = scanner.nextLong();
         boolean isRemoved = BookService.removeBook(bookId);
@@ -150,7 +149,7 @@ public class LibraryMenu {
         }
     }
 
-    public static void updateStatus() {
+    private static void updateStatus() {
         System.out.println("Enter book's ID: ");
         Long bookId = scanner.nextLong();
         scanner.nextLine();
@@ -168,7 +167,7 @@ public class LibraryMenu {
         }
     }
 
-    // mb I'll add ability to update the individual properties
+    // I'll add ability to update the individual properties
     private static void updateBook() {
         System.out.println("Enter book's ID to update: ");
         long bookId = scanner.nextLong();
@@ -198,6 +197,20 @@ public class LibraryMenu {
         BookService.updateBook(bookId, newBook);
     }
 
+    // I'll add ability to see the quantity of books, using title, authors etc.
+    private static void trackCopies() {
+        System.out.println("Enter book's ID: ");
+        long bookId = scanner.nextLong();
+        if (!BookService.bookExists(bookId)) {
+            System.out.println("Book with ID " + bookId + " not found");
+            return;
+        }
+
+        System.out.println("Enter quantity of copies: ");
+        int quantityOfCopies = scanner.nextInt();
+        BookService.trackCopies(bookId, quantityOfCopies);
+    }
+
     // Let me know if I should move methods below to other class
     private static Set<String> getValidAuthors() {
         Set<String> authors = new HashSet<>();
@@ -216,7 +229,7 @@ public class LibraryMenu {
         return authors;
     }
 
-    public static int getValidYear() {
+    private static int getValidYear() {
         int newPublicationYear;
         while (true) {
             System.out.println("Enter publication year: ");

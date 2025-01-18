@@ -50,6 +50,18 @@ public class BookService {
         }
     }
 
+    public static void trackCopies(Long bookId, int quantityOfCopies) {
+        Book book = books.get(bookId);
+
+        if (book != null) {
+            book.setNumberOfCopies(quantityOfCopies);
+            System.out.println("Number of copies has benn updated: " + book);
+        } else {
+            System.out.println("Book with ID " + bookId + " not found.");
+        }
+
+    }
+
     public static boolean bookExists(Long id) {
         return books.containsKey(id);
     }
