@@ -39,4 +39,17 @@ public class BookService {
             System.out.println("Invalid book's ID. Please try again.");
         }
     }
+
+    public static void updateBook(Long id, Book updatedBook) {
+        if (books.containsKey(id)) {
+            books.replace(id, updatedBook);
+            System.out.println("Book has been updated: " + updatedBook);
+        } else {
+            System.out.println("Book with ID " + id + " not found");
+        }
+    }
+
+    public static boolean bookExists(Long id) {
+        return books.containsKey(id);
+    }
 }

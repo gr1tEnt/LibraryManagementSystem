@@ -65,6 +65,17 @@ public class Book {
         this.numberOfCopies = 0;
     }
 
+    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, String category) {
+        this.isbn = isbn;
+        this.title = title;
+        this.authors = authors;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+        this.category = category;
+        this.numberOfCopies = 0;
+        this.status = Status.AVAILABLE;
+    }
+
     public Book() {}
 
     public Long getId() {

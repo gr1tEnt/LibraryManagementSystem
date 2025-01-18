@@ -50,7 +50,7 @@ public class LibraryMenu {
                 addNewBook();
                 break;
             case 2:
-                System.out.println("Book information has been updated!");
+                updateBook();
                 break;
             case 3:
                 removeBook();
@@ -101,6 +101,7 @@ public class LibraryMenu {
                 System.out.println("Incorrect choice");
         }
     }
+
     public static void addNewBook() {
         System.out.println("Enter ID: ");
         Long id = scanner.nextLong();
@@ -122,8 +123,8 @@ public class LibraryMenu {
         int publicationYear = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter category: ");
-        String category = scanner.nextLine(); // I'll change categories to enum
+        System.out.println("Enter category: "); // I'll change categories to enum
+        String category = scanner.nextLine();
 
         Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
 
@@ -140,6 +141,7 @@ public class LibraryMenu {
             }
         }
     }
+
     public static void removeBook() {
         System.out.println("Enter book's ID to remove: ");
         long bookId = scanner.nextLong();
@@ -150,6 +152,7 @@ public class LibraryMenu {
             System.out.println("No book found with ID " + bookId + ".");
         }
     }
+
     public static void updateStatus() {
         System.out.println("Enter book's ID: ");
         Long bookId = scanner.nextLong();
@@ -165,6 +168,69 @@ public class LibraryMenu {
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid status. Please enter one the following: Available, Borrowed, Reserved, Lost, Damaged.");
+        }
+    }
+
+    // mb I'll add ability to update the individual properties
+    private static void updateBook() {
+        System.out.println("Enter book's ID to update: ");
+        long bookId = scanner.nextLong();
+        scanner.nextLine();
+
+        if (!BookService.bookExists(bookId)) {
+            System.out.println("Book with ID " + bookId + " not found");
+            return;
+        }
+
+        System.out.println("Enter new isbn");
+        String newIsbn = scanner.nextLine();
+
+        System.out.println("Enter new title" );
+        String newTitle = scanner.nextLine();
+
+        Set<String> newAuthors = getUpdatedAuthors();
+
+        System.out.println("Enter new publisher");
+        String newPublisher = scanner.nextLine();
+
+        int newPublicationYear = getUpdatedYear();
+
+        System.out.println("Enter new category");
+        String newCategory = scanner.nextLine();
+
+        Book newBook = new Book(newIsbn, newTitle, newAuthors, newPublisher, newPublicationYear, newCategory);
+        BookService.updateBook(bookId, newBook);
+    }
+
+    private static Set<String> getUpdatedAuthors() {
+        Set<String> authors = new HashSet<>();
+        while (true) {
+            System.out.println("Enter author (type 'done' to finish):");
+            String input = scanner.nextLine().trim();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            if (!input.isEmpty()) {
+                authors.add(input);
+            } else {
+                System.out.println("Author name cannot be empty. Please try again.");
+            }
+        }
+        return authors;
+    }
+
+    public static int getUpdatedYear() {
+        int newPublicationYear;
+        while (true) {
+            System.out.println("Enter new publication year: ");
+            if (scanner.hasNextInt()) {
+                newPublicationYear = scanner.nextInt();
+                scanner.nextLine();
+                return newPublicationYear;
+            } else {
+                System.out.println("Invalid input. Please enter a valid publication year.");
+                scanner.nextLine();
+            }
         }
     }
 
