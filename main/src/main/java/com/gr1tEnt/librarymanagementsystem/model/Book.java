@@ -42,7 +42,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private String category;
+    private Category category;
 
     @Column(nullable = false)
     private int numberOfCopies;
@@ -53,7 +53,7 @@ public class Book {
     @Column(nullable = false)
     private Status status;
 
-    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, String category) {
+    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -65,7 +65,7 @@ public class Book {
         this.numberOfCopies = 0;
     }
 
-    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, String category) {
+    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category) {
         this.isbn = isbn;
         this.title = title;
         this.authors = authors;
@@ -84,6 +84,14 @@ public class Book {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getIsbn() {
@@ -126,13 +134,7 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public int getNumberOfCopies() {
         return numberOfCopies;

@@ -1,6 +1,7 @@
 package com.gr1tEnt.librarymanagementsystem.menu;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
+import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
@@ -113,18 +114,14 @@ public class LibraryMenu {
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
 
-        System.out.println("Enter authors: ");
-        Set<String> authors = Collections.singleton(scanner.nextLine());
+        Set<String> authors = getValidAuthors();
 
         System.out.println("Enter publisher: ");
         String publisher = scanner.nextLine();
 
-        System.out.println("Enter year of publication: ");
-        int publicationYear = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.println("Enter category: "); // I'll change categories to enum
-        String category = scanner.nextLine();
+        int publicationYear = getValidYear();
+        
+        Category category = getValidCategory();
 
         Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
 
@@ -188,21 +185,21 @@ public class LibraryMenu {
         System.out.println("Enter new title" );
         String newTitle = scanner.nextLine();
 
-        Set<String> newAuthors = getUpdatedAuthors();
+        Set<String> newAuthors = getValidAuthors();
 
         System.out.println("Enter new publisher");
         String newPublisher = scanner.nextLine();
 
-        int newPublicationYear = getUpdatedYear();
+        int newPublicationYear = getValidYear();
 
-        System.out.println("Enter new category");
-        String newCategory = scanner.nextLine();
+        Category newCategory = getValidCategory();
 
         Book newBook = new Book(newIsbn, newTitle, newAuthors, newPublisher, newPublicationYear, newCategory);
         BookService.updateBook(bookId, newBook);
     }
 
-    private static Set<String> getUpdatedAuthors() {
+    // Let me know if I should move methods below to other class
+    private static Set<String> getValidAuthors() {
         Set<String> authors = new HashSet<>();
         while (true) {
             System.out.println("Enter author (type 'done' to finish):");
@@ -219,10 +216,10 @@ public class LibraryMenu {
         return authors;
     }
 
-    public static int getUpdatedYear() {
+    public static int getValidYear() {
         int newPublicationYear;
         while (true) {
-            System.out.println("Enter new publication year: ");
+            System.out.println("Enter publication year: ");
             if (scanner.hasNextInt()) {
                 newPublicationYear = scanner.nextInt();
                 scanner.nextLine();
@@ -230,6 +227,22 @@ public class LibraryMenu {
             } else {
                 System.out.println("Invalid input. Please enter a valid publication year.");
                 scanner.nextLine();
+            }
+        }
+    }
+    private static Category getValidCategory() {
+        while (true) {
+            System.out.println("Enter category. Available categories: ");
+            for (Category category : Category.values()) {
+                System.out.println(category + " ");
+            }
+            System.out.println("Enter a category: ");
+
+            String input = scanner.nextLine().trim().toUpperCase();
+            try {
+                return Category.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid category. Please try again.");
             }
         }
     }
