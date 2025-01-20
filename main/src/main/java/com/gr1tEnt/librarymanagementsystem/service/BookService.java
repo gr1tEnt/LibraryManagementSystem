@@ -50,7 +50,7 @@ public class BookService {
         }
     }
 
-    public static void trackCopies(Long bookId, int quantityOfCopies) {
+    public static void trackBookCopies(Long bookId, int quantityOfCopies) {
         Book book = books.get(bookId);
 
         if (book != null) {

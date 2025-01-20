@@ -3,12 +3,15 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
+import com.gr1tEnt.librarymanagementsystem.service.AuthorsService;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
+import com.gr1tEnt.librarymanagementsystem.service.CategoryService;
+import com.gr1tEnt.librarymanagementsystem.service.PublicationYearService;
 
 import java.util.*;
 
 public class LibraryMenu {
-    static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
     static int choice;
     public static void start() {
         do {
@@ -113,14 +116,14 @@ public class LibraryMenu {
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
 
-        Set<String> authors = getValidAuthors();
+        Set<String> authors = AuthorsService.getValidAuthors();
 
         System.out.println("Enter publisher: ");
         String publisher = scanner.nextLine();
 
-        int publicationYear = getValidYear();
+        int publicationYear = PublicationYearService.getValidYear();
 
-        Category category = getValidCategory();
+        Category category = CategoryService.getValidCategory();
 
         Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
 
@@ -184,14 +187,14 @@ public class LibraryMenu {
         System.out.println("Enter new title" );
         String newTitle = scanner.nextLine();
 
-        Set<String> newAuthors = getValidAuthors();
+        Set<String> newAuthors = AuthorsService.getValidAuthors();
 
         System.out.println("Enter new publisher");
         String newPublisher = scanner.nextLine();
 
-        int newPublicationYear = getValidYear();
+        int newPublicationYear = PublicationYearService.getValidYear();
 
-        Category newCategory = getValidCategory();
+        Category newCategory = CategoryService.getValidCategory();
 
         Book newBook = new Book(newIsbn, newTitle, newAuthors, newPublisher, newPublicationYear, newCategory);
         BookService.updateBook(bookId, newBook);
@@ -208,56 +211,7 @@ public class LibraryMenu {
 
         System.out.println("Enter quantity of copies: ");
         int quantityOfCopies = scanner.nextInt();
-        BookService.trackCopies(bookId, quantityOfCopies);
-    }
+        BookService.trackBookCopies(bookId, quantityOfCopies);
 
-    // Let me know if I should move methods below to other class
-    private static Set<String> getValidAuthors() {
-        Set<String> authors = new HashSet<>();
-        while (true) {
-            System.out.println("Enter author (type 'done' to finish):");
-            String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("done")) {
-                break;
-            }
-            if (!input.isEmpty()) {
-                authors.add(input);
-            } else {
-                System.out.println("Author name cannot be empty. Please try again.");
-            }
-        }
-        return authors;
     }
-
-    private static int getValidYear() {
-        int newPublicationYear;
-        while (true) {
-            System.out.println("Enter publication year: ");
-            if (scanner.hasNextInt()) {
-                newPublicationYear = scanner.nextInt();
-                scanner.nextLine();
-                return newPublicationYear;
-            } else {
-                System.out.println("Invalid input. Please enter a valid publication year.");
-                scanner.nextLine();
-            }
-        }
-    }
-    private static Category getValidCategory() {
-        while (true) {
-            System.out.println("Enter category. Available categories: ");
-            for (Category category : Category.values()) {
-                System.out.println(category + " ");
-            }
-            System.out.println("Enter a category: ");
-
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return Category.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid category. Please try again.");
-            }
-        }
-    }
-
 }
