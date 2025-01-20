@@ -116,16 +116,10 @@ public class LibraryMenu {
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
 
-        Set<String> authors = AuthorsService.getValidAuthors();
-
         System.out.println("Enter publisher: ");
         String publisher = scanner.nextLine();
 
-        int publicationYear = PublicationYearService.getValidYear();
-
-        Category category = CategoryService.getValidCategory();
-
-        Book book = BookService.addBook(id, isbn, title, authors, publisher, publicationYear, category);
+        Book book = BookService.addBook(id, isbn, title, publisher);
 
         System.out.println("Your new book: " + book);
     }
