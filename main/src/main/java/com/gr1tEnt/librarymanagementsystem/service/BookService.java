@@ -48,12 +48,17 @@ public class BookService {
         }
     }
 
-    public static void updateBook(Long id, Book updatedBook) {
-        if (books.containsKey(id)) {
-            books.replace(id, updatedBook);
+    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
+        Set<String> authors = AuthorsService.getValidAuthors();
+        int publicationYear = PublicationYearService.getValidYear();
+        Category category = CategoryService.getValidCategory();
+
+        if (books.containsKey(bookId)) {
+            Book updatedBook = new Book(newIsbn, newTitle, authors, newPublisher, publicationYear, category);
+            books.replace(bookId, updatedBook);
             System.out.println("Book has been updated: " + updatedBook);
         } else {
-            System.out.println("Book with ID " + id + " not found");
+            System.out.println("Book with ID " + bookId + " not found");
         }
     }
 

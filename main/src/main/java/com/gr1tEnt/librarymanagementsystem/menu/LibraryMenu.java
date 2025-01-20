@@ -170,28 +170,16 @@ public class LibraryMenu {
         long bookId = scanner.nextLong();
         scanner.nextLine();
 
-        if (!BookService.bookExists(bookId)) {
-            System.out.println("Book with ID " + bookId + " not found");
-            return;
-        }
-
         System.out.println("Enter new isbn");
         String newIsbn = scanner.nextLine();
 
         System.out.println("Enter new title" );
         String newTitle = scanner.nextLine();
-
-        Set<String> newAuthors = AuthorsService.getValidAuthors();
-
+        
         System.out.println("Enter new publisher");
         String newPublisher = scanner.nextLine();
 
-        int newPublicationYear = PublicationYearService.getValidYear();
-
-        Category newCategory = CategoryService.getValidCategory();
-
-        Book newBook = new Book(newIsbn, newTitle, newAuthors, newPublisher, newPublicationYear, newCategory);
-        BookService.updateBook(bookId, newBook);
+        BookService.updateBook(bookId, newIsbn, newTitle, newPublisher);
     }
 
     // I'll add ability to see the quantity of books, using title, authors etc.
