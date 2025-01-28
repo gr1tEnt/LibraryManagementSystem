@@ -1,12 +1,8 @@
 package com.gr1tEnt.librarymanagementsystem.menu;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
-import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
-import com.gr1tEnt.librarymanagementsystem.service.AuthorsService;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
-import com.gr1tEnt.librarymanagementsystem.service.CategoryService;
-import com.gr1tEnt.librarymanagementsystem.service.PublicationYearService;
 
 import java.util.*;
 
