@@ -9,6 +9,7 @@ public class LibraryMenu {
     private final IBookManagementSystem bookManagementSystem;
     private final Scanner scanner;
 
+
     public LibraryMenu(IBookManagementSystem bookManagementSystem, Scanner scanner) {
         this.bookManagementSystem = bookManagementSystem;
         this.scanner = scanner;
@@ -48,29 +49,15 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
-            case 1:
-                bookManagementSystem.addNewBook();
-                break;
-            case 2:
-                bookManagementSystem.updateBook();
-                break;
-            case 3:
-                bookManagementSystem.removeBook();
-                break;
-            case 4:
-                bookManagementSystem.trackCopies();
-                break;
-            case 5:
-                bookManagementSystem.updateStatus();
-                break;
-            case 6:
-                bookManagementSystem.printAllBooks(BookService.getAllBooks());
-                break;
-            default:
-                System.out.println("Incorrect choice.");
+            case 1 -> bookManagementSystem.addNewBook();
+            case 2 -> bookManagementSystem.updateBook();
+            case 3 -> bookManagementSystem.removeBook();
+            case 4 -> bookManagementSystem.trackCopies();
+            case 5 -> bookManagementSystem.updateStatus();
+            case 6 -> BookService.printAllBooks(BookService.getAllBooks());
+            default -> System.out.println("Incorrect choice.");
         }
     }
-
 
 
 //Search by Properties in development
@@ -88,20 +75,13 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
-            case 1:
-                System.out.println("Enter title for searching: ");
-            case 2:
-                System.out.println("Enter author for searching: ");
-            case 3:
-                System.out.println("Enter genre for searching: ");
-            case 4:
-                System.out.println("Enter ISBN for searching: ");
-            case 5:
-                System.out.println("Enter publisher for searching: ");
-            case 6:
-                System.out.println("Enter publication year for searching: ");
-            default:
-                System.out.println("Incorrect choice");
+            case 1 -> System.out.println("Enter title for searching: ");
+            case 2 -> System.out.println("Enter author for searching: ");
+            case 3 -> System.out.println("Enter genre for searching: ");
+            case 4 -> System.out.println("Enter ISBN for searching: ");
+            case 5 -> System.out.println("Enter publisher for searching: ");
+            case 6 -> System.out.println("Enter publication year for searching: ");
+            default -> System.out.println("Incorrect choice");
         }
     }
 }

@@ -65,7 +65,6 @@ public class BookManagementSystem implements IBookManagementSystem {
         String newPublisher = scanner.nextLine();
 
         BookService.updateBook(bookId, newIsbn, newTitle, newPublisher);
-
     }
 
     @Override
@@ -103,16 +102,5 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     }
 
-    @Override
-    public void printAllBooks(Map<Long, Book> books) {
-        if (books.isEmpty()) {
-            System.out.println("No books available in the library.");
-        } else {
-            System.out.println("Listing all books: ");
-            for (Book book : books.values()) {
-                System.out.println(book);
-            }
-        }
-    }
 }
 
