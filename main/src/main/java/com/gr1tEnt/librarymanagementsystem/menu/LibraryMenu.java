@@ -3,11 +3,19 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
+import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
 
 public class LibraryMenu {
-    public static Scanner scanner = new Scanner(System.in);
-    static int choice;
-    public static void start() {
+    private final IBookManagementSystem bookManagementSystem;
+    private final Scanner scanner;
+
+    public LibraryMenu(IBookManagementSystem bookManagementSystem, Scanner scanner) {
+        this.bookManagementSystem = bookManagementSystem;
+        this.scanner = scanner;
+    }
+
+    public void start() {
+        int choice;
         do {
             System.out.println("1. Book Management");
             System.out.println("2. Book Search by Properties");
@@ -15,23 +23,19 @@ public class LibraryMenu {
             System.out.println("4. Transaction Management");
             System.out.println("5. Report Generation");
             System.out.println("6. Exit");
+
             choice = scanner.nextInt();
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    bookManagement(scanner);
-                    break;
-                case 2:
-                    searchBooks(scanner);
-                    break;
+                case 1 -> bookManagement();
+                case 2 -> searchBooks(scanner);
             }
 
         } while (choice != 6);
-        scanner.close();
     }
 
-    private static void bookManagement(Scanner scanner) {
+    public void bookManagement(){
         System.out.println("\nBook Management");
         System.out.println("1. Add new books");
         System.out.println("2. Update book information");
@@ -45,27 +49,29 @@ public class LibraryMenu {
 
         switch (choice) {
             case 1:
-                addNewBook();
+                bookManagementSystem.addNewBook();
                 break;
             case 2:
-                updateBook();
+                bookManagementSystem.updateBook();
                 break;
             case 3:
-                removeBook();
+                bookManagementSystem.removeBook();
                 break;
             case 4:
-                trackCopies();
+                bookManagementSystem.trackCopies();
                 break;
             case 5:
-                updateStatus();
+                bookManagementSystem.updateStatus();
                 break;
             case 6:
-                printAllBooks(BookService.getAllBooks());
+                bookManagementSystem.printAllBooks(BookService.getAllBooks());
                 break;
             default:
                 System.out.println("Incorrect choice.");
         }
     }
+
+
 
 //Search by Properties in development
     private static void searchBooks(Scanner scanner) {
