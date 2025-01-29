@@ -2,16 +2,20 @@ package com.gr1tEnt.librarymanagementsystem.service;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
+import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BookManagementSystem implements IBookManagementSystem {
     public final Scanner scanner;
     private final BookService bookService;
+    private final InputValidator inputValidator;
 
-    public BookManagementSystem(BookService bookService, Scanner scanner) {
+    public BookManagementSystem(BookService bookService, Scanner scanner, InputValidator inputValidator) {
         this.bookService = bookService;
         this.scanner = scanner;
+        this.inputValidator = inputValidator;
     }
 
     @Override
@@ -94,17 +98,16 @@ public class BookManagementSystem implements IBookManagementSystem {
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override
     public void trackCopies() {
-        System.out.println("Enter book's ID: ");
-        long bookId = scanner.nextLong();
-        if (!BookService.bookExists(bookId)) {
-            System.out.println("Book with ID " + bookId + " not found");
-            return;
-        }
+        long bookId = inputValidator.getValidLong("Enter book's ID: ");
 
-        System.out.println("Enter quantity of copies: ");
-        int quantityOfCopies = scanner.nextInt();
-        BookService.trackBookCopies(bookId, quantityOfCopies);
+            if (!BookService.bookExists(bookId)) {
+                System.out.println("Book with ID " + bookId + " not found");
+                return;
+            }
+            int quantityOfCopies = inputValidator.getValidInt("Enter quantity of copies: ");
+            BookService.trackBookCopies(bookId, quantityOfCopies);
 
+        System.out.println("Number of copies updated successfully!");
     }
 
 }
