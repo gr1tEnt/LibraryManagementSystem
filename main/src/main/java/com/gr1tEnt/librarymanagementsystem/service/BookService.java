@@ -40,13 +40,13 @@ public class BookService {
         return books;
     }
 
-    public static void updateBookStatus(Long id, Status newStatus) {
+    public static Book updateBookStatus(Long id, Status newStatus) {
         Book book = books.get(id);
         if (book != null) {
             book.setStatus(newStatus);
-            System.out.println("The status of the book has been updated: " + book);
+            return book;
         } else {
-            System.out.println("Invalid book's ID. Please try again.");
+            return null;
         }
     }
 

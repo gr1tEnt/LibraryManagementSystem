@@ -3,7 +3,6 @@ package com.gr1tEnt.librarymanagementsystem.service;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
-import java.util.Map;
 import java.util.Scanner;
 
 public class BookManagementSystem implements IBookManagementSystem {
@@ -75,11 +74,17 @@ public class BookManagementSystem implements IBookManagementSystem {
 
         System.out.println("Enter new status (Available, Borrowed, Reserved, Lost, Damaged): ");
         String statusInput = scanner.nextLine();
+
         try {
             Status newStatus = Status.valueOf(statusInput.toUpperCase());
-            BookService.updateBookStatus(bookId, newStatus);
+            Book updatedBook = BookService.updateBookStatus(bookId, newStatus);
 
-            System.out.println("The status has been updated!");
+            if (updatedBook != null) {
+                System.out.println("The status has been updated!");
+                System.out.println("Updated book: " + updatedBook);
+            } else {
+                System.out.println("Book with ID " + bookId + "not found.");
+            }
 
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid status. Please enter one the following: Available, Borrowed, Reserved, Lost, Damaged.");
