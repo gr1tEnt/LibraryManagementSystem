@@ -1,5 +1,7 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
+import com.gr1tEnt.librarymanagementsystem.model.Status;
+
 import java.util.Scanner;
 
 public class InputValidator {
@@ -38,6 +40,18 @@ public class InputValidator {
         }
     }
 
+    public String getValidStatus (String message) {
+        while (true) {
+            System.out.println(message);
+            String statusInput = scanner.nextLine().toUpperCase().trim();
+            try {
+                return Status.valueOf(statusInput).name();
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid status. Please enter one of: Available, Borrowed, Reserved, Lost, Damaged.");
+            }
+
+        }
+    }
 
 
 }

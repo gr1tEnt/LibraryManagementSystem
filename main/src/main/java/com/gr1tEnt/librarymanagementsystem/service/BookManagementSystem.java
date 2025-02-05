@@ -72,27 +72,17 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void updateStatus() {
-        System.out.println("Enter book's ID: ");
-        Long bookId = scanner.nextLong();
-        scanner.nextLine();
+        long bookId  = inputValidator.getValidInt("Enter book's ID: ");
 
-        System.out.println("Enter new status (Available, Borrowed, Reserved, Lost, Damaged): ");
-        String statusInput = scanner.nextLine();
-
-        try {
-            Status newStatus = Status.valueOf(statusInput.toUpperCase());
-            Book updatedBook = BookService.updateBookStatus(bookId, newStatus);
-
-            if (updatedBook != null) {
-                System.out.println("The status has been updated!");
-                System.out.println("Updated book: " + updatedBook);
-            } else {
-                System.out.println("Book with ID " + bookId + "not found.");
-            }
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Invalid status. Please enter one the following: Available, Borrowed, Reserved, Lost, Damaged.");
+        if(!BookService.bookExists(bookId)) {
+            System.out.println("Book with ID " + bookId + "not  found.");
+            return;
         }
+
+        String newStatus = inputValidator.getValidStatus("Enter new status: ");
+        BookService.updateBookStatus(bookId, Status.valueOf(newStatus));
+
+        System.out.println("The status has benn updated!");
     }
 
     // I'll add ability to see the quantity of books, using title, authors etc.
