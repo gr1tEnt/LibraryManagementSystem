@@ -51,9 +51,7 @@ public class InputValidator {
                 return Status.valueOf(statusInput).name();
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid status. Please enter one of: Available, Borrowed, Reserved, Lost, Damaged.");
-                scanner.nextLine();
             }
-
         }
     }
 

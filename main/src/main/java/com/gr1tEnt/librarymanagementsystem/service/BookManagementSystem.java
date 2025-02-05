@@ -20,9 +20,7 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void addNewBook() {
-        System.out.println("Enter ID: ");
-        Long id = scanner.nextLong();
-        scanner.nextLine();
+        long id = inputValidator.getValidLong("Enter ID: ");
 
         System.out.println("Enter ISBN: ");
         String isbn = scanner.nextLine();
@@ -54,9 +52,7 @@ public class BookManagementSystem implements IBookManagementSystem {
     // I'll add ability to update the individual properties
     @Override
     public void updateBook() {
-        System.out.println("Enter book's ID to update: ");
-        long bookId = scanner.nextLong();
-        scanner.nextLine();
+        long bookId = inputValidator.getValidLong("Enter book's ID to update: ");
 
         System.out.println("Enter new isbn");
         String newIsbn = scanner.nextLine();
@@ -80,9 +76,9 @@ public class BookManagementSystem implements IBookManagementSystem {
         }
 
         String newStatus = inputValidator.getValidStatus("Enter new status: ");
-        BookService.updateBookStatus(bookId, Status.valueOf(newStatus));
+        Book updatedBook = BookService.updateBookStatus(bookId, Status.valueOf(newStatus));
 
-        System.out.println("The status has benn updated!");
+        System.out.println("The status has benn updated! \n" + updatedBook);
     }
 
     // I'll add ability to see the quantity of books, using title, authors etc.
@@ -90,12 +86,13 @@ public class BookManagementSystem implements IBookManagementSystem {
     public void trackCopies() {
         long bookId = inputValidator.getValidLong("Enter book's ID: ");
 
-            if (!BookService.bookExists(bookId)) {
-                System.out.println("Book with ID " + bookId + " not found");
-                return;
-            }
-            int quantityOfCopies = inputValidator.getValidInt("Enter quantity of copies: ");
-            BookService.trackBookCopies(bookId, quantityOfCopies);
+        if (!BookService.bookExists(bookId)) {
+            System.out.println("Book with ID " + bookId + " not found");
+            return;
+        }
+
+        int quantityOfCopies = inputValidator.getValidInt("Enter quantity of copies: ");
+        BookService.trackBookCopies(bookId, quantityOfCopies);
 
         System.out.println("Number of copies updated successfully!");
     }
