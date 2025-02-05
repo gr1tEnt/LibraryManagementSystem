@@ -18,12 +18,13 @@ public class InputValidator {
             if (scanner.hasNextLong()) {
                 value = scanner.nextLong();
                 scanner.nextLine();
-                return value;
+                break;
             } else {
                 System.out.println("Invalid input. Please enter a valid number.");
                 scanner.nextLine();
             }
         }
+        return value;
     }
 
     public int getValidInt (String message) {
@@ -33,11 +34,13 @@ public class InputValidator {
             if (scanner.hasNextInt()) {
                 value = scanner.nextInt();
                 scanner.nextLine();
-                return value;
+                break;
             } else {
                 System.out.println("Invalid input. Please enter a valid number.");
+                scanner.nextLine();
             }
         }
+        return value;
     }
 
     public String getValidStatus (String message) {
@@ -48,6 +51,7 @@ public class InputValidator {
                 return Status.valueOf(statusInput).name();
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid status. Please enter one of: Available, Borrowed, Reserved, Lost, Damaged.");
+                scanner.nextLine();
             }
 
         }

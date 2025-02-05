@@ -72,7 +72,7 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void updateStatus() {
-        long bookId  = inputValidator.getValidInt("Enter book's ID: ");
+        long bookId  = inputValidator.getValidLong("Enter book's ID: ");
 
         if(!BookService.bookExists(bookId)) {
             System.out.println("Book with ID " + bookId + "not  found.");
