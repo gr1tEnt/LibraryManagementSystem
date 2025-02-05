@@ -1,13 +1,9 @@
 package com.gr1tEnt.librarymanagementsystem.model;
-import jakarta.persistence.*;
 import java.util.Set;
 
 public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Override
     public String toString() {
         return "Book{" +
                 "id=" + id +
@@ -23,34 +19,14 @@ public class Book {
                 '}';
     }
 
-    @Column(nullable = false, unique = true)
     private String isbn;
-
-    @Column(nullable = false)
     private String title;
-
-    @ElementCollection
-    @CollectionTable(name = "book_authors", joinColumns = @JoinColumn(name = "book_id"))
-    @Column(name = "author")
     private Set<String> authors;
-
-    @Column(nullable = false)
     private String publisher;
-
-    @Column(nullable = false)
     private int publicationYear;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-
-    @Column(nullable = false)
     private int numberOfCopies;
-
-    @Column(nullable = false)
     private String shelfLocation;
-
-    @Column(nullable = false)
     private Status status;
 
     public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category) {

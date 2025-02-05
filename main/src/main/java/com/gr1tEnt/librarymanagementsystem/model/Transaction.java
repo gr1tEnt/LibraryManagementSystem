@@ -1,28 +1,12 @@
 package com.gr1tEnt.librarymanagementsystem.model;
-import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
 public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
-
-    @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
-
-    @Column(nullable = false)
     private LocalDate borrowDate;
-
-    @Column
     private LocalDate returnDate;
-
-    @Column(nullable = false)
     private boolean isReturned;
 
     public Transaction() {}

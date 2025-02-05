@@ -1,18 +1,9 @@
 package com.gr1tEnt.librarymanagementsystem.model;
-import jakarta.persistence.*;
 
 public class LibraryStaff {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
     private String role; // e.g., Librarian, Assistant
 
     public LibraryStaff() {}

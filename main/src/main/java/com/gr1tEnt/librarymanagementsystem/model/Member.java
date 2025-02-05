@@ -1,30 +1,16 @@
 package com.gr1tEnt.librarymanagementsystem.model;
-import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.Set;
 
-@Entity
 public class Member {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long memberId;
-
-    @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false, unique = true)
     private String contactInfo; // Could be phone/email
-
-    @Column(nullable = false)
     private String membershipType; // e.g., Regular, Premium
-
-    @Column(nullable = false)
     private LocalDate joinDate;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private Set<Transaction> currentBorrowings;
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private Set<Transaction> borrowingHistory;
 
     public Member() {}
