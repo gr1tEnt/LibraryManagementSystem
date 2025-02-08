@@ -11,10 +11,10 @@ public class InputValidator {
         this.scanner = scanner;
     }
 
-    public Long getValidLong (String message) {
+    public Long getValidId() {
         long value;
         while (true) {
-            System.out.println(message);
+            System.out.println("Enter book's ID: ");
             if (scanner.hasNextLong()) {
                 value = scanner.nextLong();
                 scanner.nextLine();

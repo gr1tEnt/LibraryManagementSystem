@@ -4,7 +4,6 @@ import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BookManagementSystem implements IBookManagementSystem {
@@ -20,7 +19,7 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void addNewBook() {
-        long id = inputValidator.getValidLong("Enter ID: ");
+        long id = inputValidator.getValidId();
 
         System.out.println("Enter ISBN: ");
         String isbn = scanner.nextLine();
@@ -39,9 +38,8 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void removeBook() {
-        System.out.println("Enter book's ID to remove: ");
-        long bookId = scanner.nextLong();
-        boolean isRemoved = BookService.removeBook(bookId);
+        long bookId = inputValidator.getValidId();
+        boolean isRemoved = bookService.removeBook(bookId);
         if (isRemoved) {
             System.out.println("The book with ID " + bookId + " was removed.");
         } else {
@@ -52,7 +50,7 @@ public class BookManagementSystem implements IBookManagementSystem {
     // I'll add ability to update the individual properties
     @Override
     public void updateBook() {
-        long bookId = inputValidator.getValidLong("Enter book's ID to update: ");
+        long bookId = inputValidator.getValidId();
 
         System.out.println("Enter new isbn");
         String newIsbn = scanner.nextLine();
@@ -68,7 +66,7 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void updateStatus() {
-        long bookId  = inputValidator.getValidLong("Enter book's ID: ");
+        long bookId  = inputValidator.getValidId();
 
         if(!BookService.bookExists(bookId)) {
             System.out.println("Book with ID " + bookId + "not  found.");
@@ -84,7 +82,7 @@ public class BookManagementSystem implements IBookManagementSystem {
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override
     public void trackCopies() {
-        long bookId = inputValidator.getValidLong("Enter book's ID: ");
+        long bookId = inputValidator.getValidId();
 
         if (!BookService.bookExists(bookId)) {
             System.out.println("Book with ID " + bookId + " not found");
