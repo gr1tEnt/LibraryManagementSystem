@@ -11,6 +11,7 @@ public class InputValidator {
         this.scanner = scanner;
     }
 
+    // I'll improve this method after DB connection
     public Long getValidId() {
         long value;
         while (true) {

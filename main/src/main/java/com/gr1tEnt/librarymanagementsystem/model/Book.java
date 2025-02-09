@@ -3,22 +3,6 @@ import java.util.Set;
 
 public class Book {
     private Long id;
-
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", isbn='" + isbn + '\'' +
-                ", title='" + title + '\'' +
-                ", authors=" + authors +
-                ", publisher='" + publisher + '\'' +
-                ", publicationYear=" + publicationYear +
-                ", category='" + category + '\'' +
-                ", numberOfCopies=" + numberOfCopies +
-                ", shelfLocation='" + shelfLocation + '\'' +
-                ", status=" + status +
-                '}';
-    }
-
     private String isbn;
     private String title;
     private Set<String> authors;
@@ -134,5 +118,20 @@ public class Book {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", authors=" + authors +
+                ", publisher='" + publisher + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", category='" + category + '\'' +
+                ", numberOfCopies=" + numberOfCopies +
+                ", shelfLocation='" + shelfLocation + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
