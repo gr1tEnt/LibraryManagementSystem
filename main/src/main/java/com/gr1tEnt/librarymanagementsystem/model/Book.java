@@ -36,84 +36,8 @@ public class Book {
         this.status = Status.AVAILABLE;
     }
 
-    public Book() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Set<String> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<String> authors) {
-        this.authors = authors;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public int getPublicationYear() {
-        return publicationYear;
-    }
-
-    public void setPublicationYear(int publicationYear) {
-        this.publicationYear = publicationYear;
-    }
-
-
-
-    public int getNumberOfCopies() {
-        return numberOfCopies;
-    }
-
     public void setNumberOfCopies(int numberOfCopies) {
         this.numberOfCopies = numberOfCopies;
-    }
-
-    public String getShelfLocation() {
-        return shelfLocation;
-    }
-
-    public void setShelfLocation(String shelfLocation) {
-        this.shelfLocation = shelfLocation;
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public void setStatus(Status status) {
