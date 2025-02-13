@@ -8,7 +8,7 @@ public class Member {
     private Long memberId;
     private String name;
     private String contactInfo; // Could be phone/email
-    private String membershipType; // e.g., Regular, Premium
+    private MembershipType membershipType;
     private LocalDate joinDate;
     private Set<Transaction> currentBorrowings;
     private Set<Transaction> borrowingHistory;
