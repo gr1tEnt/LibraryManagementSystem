@@ -7,12 +7,11 @@ import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
 
 public class LibraryMenu {
     private final IBookManagementSystem bookManagementSystem;
-    private final Scanner scanner;
+    private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookManagementSystem bookManagementSystem, Scanner scanner) {
+    public LibraryMenu(IBookManagementSystem bookManagementSystem) {
         this.bookManagementSystem = bookManagementSystem;
-        this.scanner = scanner;
     }
 
     public void start() {

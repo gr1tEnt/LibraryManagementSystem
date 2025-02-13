@@ -14,7 +14,7 @@ public class Main {
         BookService bookService = new BookService();
         InputValidator inputValidator = new InputValidator(scanner);
         IBookManagementSystem bookManagementSystem  = new BookManagementSystem(bookService, scanner, inputValidator);
-        LibraryMenu menu = new LibraryMenu(bookManagementSystem, scanner);
+        LibraryMenu menu = new LibraryMenu(bookManagementSystem);
 
         menu.start();
     }
