@@ -2,13 +2,14 @@ package com.gr1tEnt.librarymanagementsystem.service;
 
 import com.gr1tEnt.librarymanagementsystem.database.DatabaseConnection;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
+import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
 import java.sql.*;
 import java.util.*;
 
 public class BookService {
-    private static final Map<Long, Book> books = new HashMap<>();
+    private static final List<Book> books = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
 
 
@@ -44,7 +45,7 @@ public class BookService {
         }
     }
 
-    public static boolean removeBook(Long id) {
+/*    public static boolean removeBook(Long id) {
         if (books.containsKey(id)) {
             Book removedBook = books.remove(id);
             System.out.println("Book removed " + removedBook);
@@ -53,13 +54,36 @@ public class BookService {
             System.out.println("Invalid book's ID. Please try again");
             return false;
         }
-    }
+    }*/
 
-    public static Map<Long, Book> getAllBooks() {
+    public static List<Book> getAllBooks() {
+        String sql = "SELECT * FROM books";
+        try (Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Book book = new Book(
+                        rs.getLong("id"),
+                        rs.getString("isbn"),
+                        rs.getString("title"),
+                        Collections.singleton(rs.getString("authors")),
+                        rs.getString("publisher"),
+                        rs.getInt("publication_year"),
+                        Category.valueOf(rs.getString("category")),
+                        rs.getInt("number_of_copies"),
+                        rs.getString("shelfLocation"),
+                        Status.valueOf(rs.getString("status"))
+                );
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return books;
     }
 
-    public static Book updateBookStatus(Long id, Status newStatus) {
+/*    public static Book updateBookStatus(Long id, Status newStatus) {
         Book book = books.get(id);
         if (book != null) {
             book.setStatus(newStatus);
@@ -67,7 +91,7 @@ public class BookService {
         } else {
             return null;
         }
-    }
+    }*/
 
 /*    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
 
@@ -85,7 +109,7 @@ public class BookService {
     }
 */
 
-    public static void trackBookCopies(Long bookId, int quantityOfCopies) {
+/*    public static void trackBookCopies(Long bookId, int quantityOfCopies) {
         Book book = books.get(bookId);
 
         if (book != null) {
@@ -94,8 +118,7 @@ public class BookService {
         } else {
             System.out.println("Book with ID " + bookId + " not found.");
         }
-
-    }
+    }*/
 
     public static void printAllBooks(Map<Long, Book> books) {
         if (books.isEmpty()) {
@@ -109,6 +132,6 @@ public class BookService {
     }
 
     public static boolean bookExists(Long id) {
-        return books.containsKey(id);
+        return books.contains(id);
     }
 }

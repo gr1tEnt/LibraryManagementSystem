@@ -14,17 +14,6 @@ public class Book {
     private String shelfLocation;
     private Status status;
 
-    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category) {
-        this.isbn = isbn;
-        this.title = title;
-        this.authors = authors;
-        this.publisher = publisher;
-        this.publicationYear = publicationYear;
-        this.category = category;
-        this.numberOfCopies = 0;
-        this.status = Status.AVAILABLE;
-    }
-
     public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
         this.isbn = isbn;
         this.title = title;
@@ -35,6 +24,9 @@ public class Book {
         this.numberOfCopies = numberOfCopies;
         this.shelfLocation = shelfLocation;
         this.status = status;
+    }
+
+    public Book(long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
     }
 
     public String getIsbn() {
