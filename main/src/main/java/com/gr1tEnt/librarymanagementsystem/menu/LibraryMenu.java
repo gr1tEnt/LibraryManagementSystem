@@ -53,7 +53,7 @@ public class LibraryMenu {
             case 3 -> bookManagementSystem.removeBook();
             case 4 -> bookManagementSystem.trackCopies();
             case 5 -> bookManagementSystem.updateStatus();
-            //case 6 -> BookService.printAllBooks();
+            case 6 -> BookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
         }
     }

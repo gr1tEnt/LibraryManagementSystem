@@ -120,12 +120,14 @@ public class BookService {
         }
     }*/
 
-    public static void printAllBooks(Map<Long, Book> books) {
-        if (books.isEmpty()) {
+    public static void printAllBooks() {
+        List<Book> books = getAllBooks();
+
+        if (books == null || books.isEmpty()) {
             System.out.println("No books available in the library.");
         } else {
             System.out.println("Listing all books: ");
-            for (Book book : books.values()) {
+            for (Book book : books) {
                 System.out.println(book);
             }
         }

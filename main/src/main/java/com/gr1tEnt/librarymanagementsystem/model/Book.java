@@ -26,7 +26,17 @@ public class Book {
         this.status = status;
     }
 
-    public Book(long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
+    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
+        this.id = id;
+        this.isbn = isbn;
+        this.title = title;
+        this.authors = authors;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+        this.category = category;
+        this.numberOfCopies = numberOfCopies;
+        this.shelfLocation = shelfLocation;
+        this.status = status;
     }
 
     public String getIsbn() {
