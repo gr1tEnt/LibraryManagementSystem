@@ -1,9 +1,10 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
+import com.gr1tEnt.librarymanagementsystem.database.DatabaseConnection;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
-import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
+import java.sql.*;
 import java.util.*;
 
 public class BookService {
@@ -11,18 +12,36 @@ public class BookService {
     private static final Scanner scanner = new Scanner(System.in);
 
 
-    public static Book addBook(Long id, String isbn, String title, String publisher) {
-        Set<String> authors = getValidAuthors();
-        int publicationYear = getValidYear();
-        Category category = getValidCategory();
+    public static void addBook(Book book) {
+        String sql = "INSERT INTO books (isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        if (books.containsKey(id)) {
-            throw new IllegalArgumentException("Book with ID " + id + " already exists");
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, book.getIsbn());
+            stmt.setString(2, book.getTitle());
+            stmt.setString(3, book.getAuthors().toString());
+            stmt.setString(4, book.getPublisher());
+            stmt.setInt(5, book.getPublicationYear());
+            stmt.setString(6, book.getCategory().name());
+            stmt.setInt(7, book.getNumberOfCopies());
+            stmt.setString(8, book.getShelfLocation());
+            stmt.setString(9, book.getStatus().name());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Failed to insert book.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    book.setId(generatedKeys.getLong(1));
+                    System.out.println("Book added with ID " + book.getId());
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        Book book = new Book(id, isbn, title, authors, publisher, publicationYear, category);
-        books.put(id, book);
-        return book;
     }
 
     public static boolean removeBook(Long id) {
@@ -50,7 +69,8 @@ public class BookService {
         }
     }
 
-    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
+/*    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
+
         Set<String> authors = getValidAuthors();
         int publicationYear = getValidYear();
         Category category = getValidCategory();
@@ -63,6 +83,7 @@ public class BookService {
             System.out.println("Book with ID " + bookId + " not found");
         }
     }
+*/
 
     public static void trackBookCopies(Long bookId, int quantityOfCopies) {
         Book book = books.get(bookId);
@@ -83,55 +104,6 @@ public class BookService {
             System.out.println("Listing all books: ");
             for (Book book : books.values()) {
                 System.out.println(book);
-            }
-        }
-    }
-
-    public static Set<String> getValidAuthors() {
-        Set<String> authors = new HashSet<>();
-        while (true) {
-            System.out.println("Enter author (type 'done' to finish):");
-            String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("done")) {
-                break;
-            }
-            if (!input.isEmpty()) {
-                authors.add(input);
-            } else {
-                System.out.println("Author name cannot be empty. Please try again.");
-            }
-        }
-        return authors;
-    }
-
-    public static Category getValidCategory() {
-        while (true) {
-            System.out.println("Enter category. Available categories: ");
-            for (Category category : Category.values()) {
-                System.out.println(category + " ");
-            }
-            System.out.println("Enter a category: ");
-
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return Category.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid category. Please try again.");
-            }
-        }
-    }
-
-    public static int getValidYear() {
-        int newPublicationYear;
-        while (true) {
-            System.out.println("Enter publication year: ");
-            if (scanner.hasNextInt()) {
-                newPublicationYear = scanner.nextInt();
-                scanner.nextLine();
-                return newPublicationYear;
-            } else {
-                System.out.println("Invalid input. Please enter a valid publication year.");
-                scanner.nextLine();
             }
         }
     }
