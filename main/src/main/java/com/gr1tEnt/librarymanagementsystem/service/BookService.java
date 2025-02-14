@@ -5,13 +5,12 @@ import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
 public class BookService {
     private static final List<Book> books = new ArrayList<>();
-    private static final Scanner scanner = new Scanner(System.in);
-
 
     public static void addBook(Book book) {
         String sql = "INSERT INTO books (isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -45,16 +44,19 @@ public class BookService {
         }
     }
 
-/*    public static boolean removeBook(Long id) {
-        if (books.containsKey(id)) {
-            Book removedBook = books.remove(id);
-            System.out.println("Book removed " + removedBook);
-            return true;
-        } else {
-            System.out.println("Invalid book's ID. Please try again");
-            return false;
+    public static void removeBook(Long id) {
+        String sql = "DELETE FROM books WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+            System.out.println("Book deleted successfully");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    }*/
+    }
 
     public static List<Book> getAllBooks() {
         String sql = "SELECT * FROM books";

@@ -52,13 +52,8 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void removeBook() {
-/*        long bookId = inputValidator.getValidId();
-        boolean isRemoved = bookService.removeBook(bookId);
-        if (isRemoved) {
-            System.out.println("The book with ID " + bookId + " was removed.");
-        } else {
-            System.out.println("No book found with ID " + bookId + ".");
-        }*/
+        long bookId = inputValidator.getValidId();
+        BookService.removeBook(bookId);
     }
 
     // I'll add ability to update the individual properties
