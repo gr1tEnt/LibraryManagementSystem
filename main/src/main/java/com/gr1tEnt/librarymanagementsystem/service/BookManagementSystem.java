@@ -84,17 +84,8 @@ public class BookManagementSystem implements IBookManagementSystem {
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override
     public void trackCopies() {
-/*        long bookId = inputValidator.getValidId();
-
-        if (!BookService.bookExists(bookId)) {
-            System.out.println("Book with ID " + bookId + " not found");
-            return;
-        }
-
-        int quantityOfCopies = inputValidator.getValidInt("Enter quantity of copies: ");
-        BookService.trackBookCopies(bookId, quantityOfCopies);
-
-        System.out.println("Number of copies updated successfully!");*/
+        long bookId = inputValidator.getValidId();
+        BookService.trackBookCopies(bookId);
     }
 
 }

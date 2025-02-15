@@ -1,6 +1,5 @@
 package com.gr1tEnt.librarymanagementsystem.model;
 import java.util.Set;
-import java.util.UUID;
 
 public class Book {
     private Long id;

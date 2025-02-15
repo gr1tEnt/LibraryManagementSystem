@@ -5,7 +5,6 @@ import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
@@ -44,14 +43,14 @@ public class BookService {
         }
     }
 
-    public static void removeBook(Long id) {
+    public static void removeBook(Long bookId) {
         String sql = "DELETE FROM books WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setLong(1, id);
-            checkUpdateResult(id, stmt);
+            stmt.setLong(1, bookId);
+            checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -85,16 +84,16 @@ public class BookService {
         return books;
     }
 
-    public static void updateBookStatus(Long id, Status newStatus) {
+    public static void updateBookStatus(Long bookId, Status newStatus) {
         String sql = "UPDATE books SET status = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newStatus.name());
-            stmt.setLong(2, id);
+            stmt.setLong(2, bookId);
 
-            checkUpdateResult(id, stmt);
+            checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -102,10 +101,10 @@ public class BookService {
     }
     
     // I'm not sure if this method should be here
-    private static void checkUpdateResult(Long id, PreparedStatement stmt) throws SQLException {
+    private static void checkUpdateResult(Long bookId, PreparedStatement stmt) throws SQLException {
         int affectedRows = stmt.executeUpdate();
         if (affectedRows == 0) {
-            System.out.println("No book found with id " + id);
+            System.out.println("No book found with id " + bookId);
         } else {
             System.out.println("Books has been updated.");
         }
@@ -127,16 +126,27 @@ public class BookService {
     }
 */
 
-/*    public static void trackBookCopies(Long bookId, int quantityOfCopies) {
-        Book book = books.get(bookId);
+    public static void trackBookCopies(Long bookId) {
+        String sql = "SELECT number_of_copies FROM books WHERE id = ?";
 
-        if (book != null) {
-            book.setNumberOfCopies(quantityOfCopies);
-            System.out.println("Number of copies has benn updated: " + book);
-        } else {
-            System.out.println("Book with ID " + bookId + " not found.");
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, bookId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()){
+                    int copies = rs.getInt("number_of_copies");
+                    System.out.println("Number of copies: " + copies);
+                } else {
+                    System.out.println("No book found with ID " + bookId);
+                }
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    }*/
+    }
 
     public static void printAllBooks() {
         List<Book> books = getAllBooks();
