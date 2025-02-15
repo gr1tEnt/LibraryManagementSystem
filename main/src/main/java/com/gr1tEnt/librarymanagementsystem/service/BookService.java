@@ -51,6 +51,7 @@ public class BookService {
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
+            // update this
             stmt.executeUpdate();
             System.out.println("Book deleted successfully");
         } catch (SQLException e) {
@@ -85,15 +86,26 @@ public class BookService {
         return books;
     }
 
-/*    public static Book updateBookStatus(Long id, Status newStatus) {
-        Book book = books.get(id);
-        if (book != null) {
-            book.setStatus(newStatus);
-            return book;
-        } else {
-            return null;
+    public static void updateBookStatus(Long id, Status newStatus) {
+        String sql = "UPDATE books SET status = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newStatus.name());
+            stmt.setLong(2, id);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                System.out.println("No book found with id " + id);
+            } else {
+                System.out.println("Book status has been updated.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-    }*/
+    }
 
 /*    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
 

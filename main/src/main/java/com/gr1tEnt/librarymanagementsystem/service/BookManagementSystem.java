@@ -75,17 +75,18 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void updateStatus() {
-     /*   long bookId  = inputValidator.getValidId();
+        long bookId  = inputValidator.getValidId();
 
+/*
         if(!BookService.bookExists(bookId)) {
-            System.out.println("Book with ID " + bookId + "not  found.");
+            System.out.println("Book with ID " + bookId + " not  found.");
             return;
         }
+*/
 
         Status newStatus = inputValidator.getValidStatus("Enter new status: ");
-        Book updatedBook = BookService.updateBookStatus(bookId, newStatus);
 
-        System.out.println("The status has benn updated! \n" + updatedBook);*/
+        BookService.updateBookStatus(bookId, newStatus);
     }
 
     // I'll add ability to see the quantity of books, using title, authors etc.
