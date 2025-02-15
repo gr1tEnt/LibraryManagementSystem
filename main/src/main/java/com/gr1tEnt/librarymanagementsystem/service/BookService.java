@@ -51,9 +51,14 @@ public class BookService {
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
-            // update this
-            stmt.executeUpdate();
-            System.out.println("Book deleted successfully");
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                System.out.println("No book found with id " + id);
+            } else {
+                System.out.println("Book deleted successfully");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
