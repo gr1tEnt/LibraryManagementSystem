@@ -21,7 +21,6 @@ public class BookManagementSystem implements IBookManagementSystem {
 
     @Override
     public void addNewBook() {
-        long id = inputValidator.getValidId();
 
         System.out.println("Enter ISBN: ");
         String isbn = scanner.nextLine();
@@ -76,13 +75,6 @@ public class BookManagementSystem implements IBookManagementSystem {
     @Override
     public void updateStatus() {
         long bookId  = inputValidator.getValidId();
-
-/*
-        if(!BookService.bookExists(bookId)) {
-            System.out.println("Book with ID " + bookId + " not  found.");
-            return;
-        }
-*/
 
         Status newStatus = inputValidator.getValidStatus("Enter new status: ");
 

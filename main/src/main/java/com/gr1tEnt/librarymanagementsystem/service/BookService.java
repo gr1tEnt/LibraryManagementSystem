@@ -51,14 +51,8 @@ public class BookService {
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
+            checkUpdateResult(id, stmt);
 
-            int affectedRows = stmt.executeUpdate();
-
-            if (affectedRows == 0) {
-                System.out.println("No book found with id " + id);
-            } else {
-                System.out.println("Book deleted successfully");
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -100,15 +94,20 @@ public class BookService {
             stmt.setString(1, newStatus.name());
             stmt.setLong(2, id);
 
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                System.out.println("No book found with id " + id);
-            } else {
-                System.out.println("Book status has been updated.");
-            }
+            checkUpdateResult(id, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    // I'm not sure if this method should be here
+    private static void checkUpdateResult(Long id, PreparedStatement stmt) throws SQLException {
+        int affectedRows = stmt.executeUpdate();
+        if (affectedRows == 0) {
+            System.out.println("No book found with id " + id);
+        } else {
+            System.out.println("Books has been updated.");
         }
     }
 
