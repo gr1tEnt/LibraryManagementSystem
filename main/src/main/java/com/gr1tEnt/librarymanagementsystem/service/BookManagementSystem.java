@@ -91,6 +91,16 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateIsbn(bookId, newIsbn);
     }
 
+    @Override
+    public void updateTitle() {
+        Long bookId = inputValidator.getValidId();
+
+        System.out.println("Enter new title: ");
+        String newTitle = scanner.nextLine();
+
+        BookService.updateTitle(bookId, newTitle);
+    }
+
 
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override

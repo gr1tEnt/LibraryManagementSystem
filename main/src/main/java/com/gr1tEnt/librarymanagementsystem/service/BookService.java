@@ -106,7 +106,24 @@ public class BookService {
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, newIsbn);
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void updateTitle(Long bookId, String newTitle) {
+        String sql = "UPDATE books SET title = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newTitle);
             stmt.setLong(2, bookId);
 
             checkUpdateResult(bookId, stmt);
