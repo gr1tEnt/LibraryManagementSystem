@@ -118,6 +118,13 @@ public class BookManagementSystem implements IBookManagementSystem {
         String newPublisher = scanner.nextLine();
 
         BookService.updatePublisher(bookId, newPublisher);
+    }
+
+    public void updateYear() {
+        Long bookId = inputValidator.getValidId();
+        int newYear = inputValidator.getValidYear();
+
+        BookService.updateYear(bookId, newYear);
 
     }
 

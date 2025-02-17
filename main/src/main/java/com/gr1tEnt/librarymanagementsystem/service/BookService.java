@@ -162,7 +162,21 @@ public class BookService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public static void updateYear(Long bookId, int newYear) {
+        String sql = "UPDATE books SET publication_year = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, newYear);
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     
