@@ -8,4 +8,5 @@ public interface IBookManagementSystem {
     void trackCopies();
     void updateIsbn();
     void updateTitle();
+    void updateAuthors();
 }

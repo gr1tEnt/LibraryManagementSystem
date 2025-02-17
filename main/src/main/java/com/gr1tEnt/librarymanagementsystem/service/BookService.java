@@ -133,6 +133,22 @@ public class BookService {
         }
     }
 
+    public static void updateAuthors(Long bookId, Set<String> newAuthors) {
+        String sql = "UPDATE books SET authors = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newAuthors.toString());
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     
     // I'm not sure if this method should be here
     private static void checkUpdateResult(Long bookId, PreparedStatement stmt) throws SQLException {

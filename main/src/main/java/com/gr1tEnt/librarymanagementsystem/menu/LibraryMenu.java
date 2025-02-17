@@ -73,6 +73,7 @@ public class LibraryMenu {
         switch (choice) {
             case 1 -> bookManagementSystem.updateIsbn();
             case 2 -> bookManagementSystem.updateTitle();
+            case 3 -> bookManagementSystem.updateAuthors();
             case 9 -> bookManagementSystem.updateStatus();
         }
     }
