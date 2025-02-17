@@ -142,7 +142,7 @@ public class BookService {
                     System.out.println("No book found with ID " + bookId);
                 }
             }
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

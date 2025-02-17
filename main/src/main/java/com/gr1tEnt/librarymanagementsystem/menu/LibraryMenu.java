@@ -35,26 +35,43 @@ public class LibraryMenu {
         } while (choice != 6);
     }
 
-    public void bookManagement(){
+    public void bookManagement() {
         System.out.println("\nBook Management");
         System.out.println("1. Add new books");
         System.out.println("2. Update book information");
         System.out.println("3. Remove books");
         System.out.println("4. Track book copies");
-        System.out.println("5. Set new status");
-        System.out.println("6. Show all books");
+        System.out.println("5. Show all books");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
 
         switch (choice) {
             case 1 -> bookManagementSystem.addNewBook();
-            case 2 -> bookManagementSystem.updateBook();
+            case 2 -> updateBook();
             case 3 -> bookManagementSystem.removeBook();
             case 4 -> bookManagementSystem.trackCopies();
-            case 5 -> bookManagementSystem.updateStatus();
-            case 6 -> BookService.printAllBooks();
+            case 5 -> BookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
+        }
+    }
+
+    private void updateBook() {
+        System.out.println("1. Update isbn");
+        System.out.println("2. Update title");
+        System.out.println("3. Update authors");
+        System.out.println("4. Update publisher");
+        System.out.println("5. Update year");
+        System.out.println("6. Update category");
+        System.out.println("7. Update number of copies");
+        System.out.println("8. Update shelf location");
+        System.out.println("9. Update status");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 9 -> bookManagementSystem.updateStatus();
         }
     }
 
