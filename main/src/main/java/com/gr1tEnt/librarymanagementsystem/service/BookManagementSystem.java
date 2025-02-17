@@ -134,6 +134,13 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateCategory(bookId, newCategory);
     }
 
+    public void updateNumberOfCopies() {
+        Long bookId = inputValidator.getValidId();
+        int newNumberOfCopies = inputValidator.getValidInt("Enter new number of copies: ");
+
+        BookService.updateNumberOfCopies(bookId, newNumberOfCopies);
+    }
+
 
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override

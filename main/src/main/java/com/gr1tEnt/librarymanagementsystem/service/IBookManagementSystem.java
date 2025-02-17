@@ -12,4 +12,5 @@ public interface IBookManagementSystem {
     void updatePublisher();
     void updateYear();
     void updateCategory();
+    void updateNumberOfCopies();
 }
