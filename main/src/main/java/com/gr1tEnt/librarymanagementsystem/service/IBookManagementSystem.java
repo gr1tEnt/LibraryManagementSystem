@@ -9,4 +9,5 @@ public interface IBookManagementSystem {
     void updateIsbn();
     void updateTitle();
     void updateAuthors();
+    void updatePublisher();
 }

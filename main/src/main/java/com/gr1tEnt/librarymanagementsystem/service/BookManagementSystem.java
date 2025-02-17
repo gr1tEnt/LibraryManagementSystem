@@ -110,6 +110,18 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateAuthors(bookId,newAuthors);
     }
 
+    @Override
+    public void updatePublisher() {
+        Long bookId = inputValidator.getValidId();
+
+        System.out.println("Enter new publisher: ");
+        String newPublisher = scanner.nextLine();
+
+        BookService.updatePublisher(bookId, newPublisher);
+
+    }
+
+
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override
     public void trackCopies() {

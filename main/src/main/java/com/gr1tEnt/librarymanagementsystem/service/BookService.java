@@ -146,6 +146,22 @@ public class BookService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void updatePublisher(Long bookId, String newPublisher) {
+        String sql = "UPDATE books SET publisher = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newPublisher);
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
