@@ -6,4 +6,5 @@ public interface IBookManagementSystem {
     void updateBook();
     void updateStatus();
     void trackCopies();
+    void updateIsbn();
 }

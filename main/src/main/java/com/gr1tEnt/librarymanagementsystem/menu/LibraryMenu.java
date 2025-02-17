@@ -71,6 +71,7 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
+            case 1 -> bookManagementSystem.updateIsbn();
             case 9 -> bookManagementSystem.updateStatus();
         }
     }

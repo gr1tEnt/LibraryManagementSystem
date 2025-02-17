@@ -84,6 +84,7 @@ public class BookService {
         return books;
     }
 
+    // AAALSO I'm not sure if update methods should be in this class, technically it's ok, but there are many of them here
     public static void updateBookStatus(Long bookId, Status newStatus) {
         String sql = "UPDATE books SET status = ? WHERE id = ?";
 
@@ -99,6 +100,22 @@ public class BookService {
             throw new RuntimeException(e);
         }
     }
+
+    public static void updateIsbn(Long bookId, String newIsbn) {
+        String sql = "UPDATE books SET isbn = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newIsbn);
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     
     // I'm not sure if this method should be here
     private static void checkUpdateResult(Long bookId, PreparedStatement stmt) throws SQLException {
@@ -109,22 +126,6 @@ public class BookService {
             System.out.println("Books has been updated.");
         }
     }
-
-/*    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
-
-        Set<String> authors = getValidAuthors();
-        int publicationYear = getValidYear();
-        Category category = getValidCategory();
-
-        if (books.containsKey(bookId)) {
-            Book updatedBook = new Book(newIsbn, newTitle, authors, newPublisher, publicationYear, category);
-            books.replace(bookId, updatedBook);
-            System.out.println("Book has been updated: " + updatedBook);
-        } else {
-            System.out.println("Book with ID " + bookId + " not found");
-        }
-    }
-*/
 
     public static void trackBookCopies(Long bookId) {
         String sql = "SELECT number_of_copies FROM books WHERE id = ?";
