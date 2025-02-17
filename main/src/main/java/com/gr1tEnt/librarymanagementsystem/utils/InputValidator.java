@@ -1,6 +1,7 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
 import com.gr1tEnt.librarymanagementsystem.model.Category;
+import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
 import java.util.HashSet;
@@ -104,6 +105,23 @@ public class InputValidator {
             } else {
                 System.out.println("Invalid input. Please enter a valid publication year.");
                 scanner.nextLine();
+            }
+        }
+    }
+
+    public ShelfLocation getValidShelfLocation() {
+        while (true) {
+            System.out.println("Enter shelf location. Available locations: ");
+            for (ShelfLocation shelfLocation : ShelfLocation.values()) {
+                System.out.println(shelfLocation + " ");
+            }
+            System.out.println("Enter a category: ");
+
+            String input = scanner.nextLine().trim().toUpperCase();
+            try {
+                return ShelfLocation.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid location. Please try again.");
             }
         }
     }

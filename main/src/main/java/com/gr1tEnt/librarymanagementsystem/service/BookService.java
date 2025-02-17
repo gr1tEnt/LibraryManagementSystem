@@ -3,6 +3,7 @@ package com.gr1tEnt.librarymanagementsystem.service;
 import com.gr1tEnt.librarymanagementsystem.database.DatabaseConnection;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
+import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
 import java.sql.*;
@@ -24,7 +25,7 @@ public class BookService {
             stmt.setInt(5, book.getPublicationYear());
             stmt.setString(6, book.getCategory().name());
             stmt.setInt(7, book.getNumberOfCopies());
-            stmt.setString(8, book.getShelfLocation());
+            stmt.setString(8, book.getShelfLocation().name());
             stmt.setString(9, book.getStatus().name());
 
             int affectedRows = stmt.executeUpdate();
@@ -73,7 +74,7 @@ public class BookService {
                         rs.getInt("publication_year"),
                         Category.valueOf(rs.getString("category")),
                         rs.getInt("number_of_copies"),
-                        rs.getString("shelfLocation"),
+                        ShelfLocation.valueOf(rs.getString("shelfLocation")),
                         Status.valueOf(rs.getString("status"))
                 );
                 books.add(book);

@@ -2,6 +2,7 @@ package com.gr1tEnt.librarymanagementsystem.service;
 
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
+import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
@@ -39,8 +40,7 @@ public class BookManagementSystem implements IBookManagementSystem {
 
         int numberOfCopies = inputValidator.getValidInt("Enter numberOfCopies: ");
 
-        System.out.println("Enter shelfLocation: ");
-        String shelfLocation = scanner.nextLine();
+        ShelfLocation shelfLocation = inputValidator.getValidShelfLocation();
 
         Status status = inputValidator.getValidStatus("Enter status: ");
 

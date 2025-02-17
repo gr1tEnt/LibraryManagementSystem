@@ -10,10 +10,10 @@ public class Book {
     private int publicationYear;
     private Category category;
     private int numberOfCopies;
-    private String shelfLocation;
+    private ShelfLocation shelfLocation;
     private Status status;
 
-    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
+    public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
         this.isbn = isbn;
         this.title = title;
         this.authors = authors;
@@ -25,7 +25,7 @@ public class Book {
         this.status = status;
     }
 
-    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, String shelfLocation, Status status) {
+    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -66,7 +66,7 @@ public class Book {
         return numberOfCopies;
     }
 
-    public String getShelfLocation() {
+    public ShelfLocation getShelfLocation() {
         return shelfLocation;
     }
 
