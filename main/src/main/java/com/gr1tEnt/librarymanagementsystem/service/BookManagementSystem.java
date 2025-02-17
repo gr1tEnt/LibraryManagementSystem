@@ -125,7 +125,13 @@ public class BookManagementSystem implements IBookManagementSystem {
         int newYear = inputValidator.getValidYear();
 
         BookService.updateYear(bookId, newYear);
+    }
 
+    public void updateCategory() {
+        Long bookId = inputValidator.getValidId();
+        Category newCategory = inputValidator.getValidCategory();
+
+        BookService.updateCategory(bookId, newCategory);
     }
 
 
