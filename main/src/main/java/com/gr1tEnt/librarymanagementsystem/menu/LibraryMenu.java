@@ -4,15 +4,20 @@ import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
 import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
+import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookManagementSystem;
 
 public class LibraryMenu {
     private final IBookManagementSystem bookManagementSystem;
+    private final IUpdateBookManagementSystem updateBookManagementSystem;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookManagementSystem bookManagementSystem) {
+    public LibraryMenu(IBookManagementSystem bookManagementSystem, IUpdateBookManagementSystem updateBookManagementSystem) {
         this.bookManagementSystem = bookManagementSystem;
+        this.updateBookManagementSystem = updateBookManagementSystem;
     }
+
+
 
     public void start() {
         int choice;
@@ -71,15 +76,15 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
-            case 1 -> bookManagementSystem.updateIsbn();
-            case 2 -> bookManagementSystem.updateTitle();
-            case 3 -> bookManagementSystem.updateAuthors();
-            case 4 -> bookManagementSystem.updatePublisher();
-            case 5 -> bookManagementSystem.updateYear();
-            case 6 -> bookManagementSystem.updateCategory();
-            case 7 -> bookManagementSystem.updateNumberOfCopies();
-            case 8 -> bookManagementSystem.updateShelfLocation();
-            case 9 -> bookManagementSystem.updateStatus();
+            case 1 -> updateBookManagementSystem.updateIsbn();
+            case 2 -> updateBookManagementSystem.updateTitle();
+            case 3 -> updateBookManagementSystem.updateAuthors();
+            case 4 -> updateBookManagementSystem.updatePublisher();
+            case 5 -> updateBookManagementSystem.updateYear();
+            case 6 -> updateBookManagementSystem.updateCategory();
+            case 7 -> updateBookManagementSystem.updateNumberOfCopies();
+            case 8 -> updateBookManagementSystem.updateShelfLocation();
+            case 9 -> updateBookManagementSystem.updateStatus();
         }
     }
 

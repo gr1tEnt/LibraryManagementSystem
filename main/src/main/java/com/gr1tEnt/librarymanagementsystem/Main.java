@@ -4,6 +4,7 @@ import com.gr1tEnt.librarymanagementsystem.menu.LibraryMenu;
 import com.gr1tEnt.librarymanagementsystem.service.BookManagementSystem;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
+import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookManagementSystem;
 import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
 import java.util.Scanner;
@@ -14,7 +15,8 @@ public class Main {
         BookService bookService = new BookService();
         InputValidator inputValidator = new InputValidator(scanner);
         IBookManagementSystem bookManagementSystem  = new BookManagementSystem(bookService, scanner, inputValidator);
-        LibraryMenu menu = new LibraryMenu(bookManagementSystem);
+        IUpdateBookManagementSystem updateBookManagementSystem = new BookManagementSystem(bookService, scanner, inputValidator);
+        LibraryMenu menu = new LibraryMenu(bookManagementSystem, updateBookManagementSystem);
 
         menu.start();
     }

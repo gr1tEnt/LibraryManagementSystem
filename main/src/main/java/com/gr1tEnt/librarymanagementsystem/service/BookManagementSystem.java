@@ -1,15 +1,12 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
-import com.gr1tEnt.librarymanagementsystem.model.Book;
-import com.gr1tEnt.librarymanagementsystem.model.Category;
-import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
-import com.gr1tEnt.librarymanagementsystem.model.Status;
+import com.gr1tEnt.librarymanagementsystem.model.*;
 import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
 import java.util.Scanner;
 import java.util.Set;
 
-public class BookManagementSystem implements IBookManagementSystem {
+public class BookManagementSystem implements IBookManagementSystem, IUpdateBookManagementSystem {
     public final Scanner scanner;
     private final BookService bookService;
     private final InputValidator inputValidator;
@@ -53,23 +50,6 @@ public class BookManagementSystem implements IBookManagementSystem {
     public void removeBook() {
         long bookId = inputValidator.getValidId();
         BookService.removeBook(bookId);
-    }
-
-    // I'll add ability to update the individual properties
-    @Override
-    public void updateBook() {
-        long bookId = inputValidator.getValidId();
-
-        System.out.println("Enter new isbn");
-        String newIsbn = scanner.nextLine();
-
-        System.out.println("Enter new title" );
-        String newTitle = scanner.nextLine();
-
-        System.out.println("Enter new publisher");
-        String newPublisher = scanner.nextLine();
-
-//        BookService.updateBook(bookId, newIsbn, newTitle, newPublisher);
     }
 
     @Override
@@ -120,13 +100,14 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updatePublisher(bookId, newPublisher);
     }
 
+    @Override
     public void updateYear() {
         Long bookId = inputValidator.getValidId();
         int newYear = inputValidator.getValidYear();
 
         BookService.updateYear(bookId, newYear);
     }
-
+    @Override
     public void updateCategory() {
         Long bookId = inputValidator.getValidId();
         Category newCategory = inputValidator.getValidCategory();
@@ -134,6 +115,7 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateCategory(bookId, newCategory);
     }
 
+    @Override
     public void updateNumberOfCopies() {
         Long bookId = inputValidator.getValidId();
         int newNumberOfCopies = inputValidator.getValidInt("Enter new number of copies: ");
@@ -141,6 +123,7 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateNumberOfCopies(bookId, newNumberOfCopies);
     }
 
+    @Override
     public void updateShelfLocation() {
         Long bookId = inputValidator.getValidId();
         ShelfLocation newShelflocation = inputValidator.getValidShelfLocation();
