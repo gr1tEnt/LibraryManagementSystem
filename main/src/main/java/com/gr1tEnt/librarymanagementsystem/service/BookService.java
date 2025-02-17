@@ -210,6 +210,21 @@ public class BookService {
         }
     }
 
+    public static void updateShelfLocation(Long bookId, ShelfLocation newShelfLocation) {
+        String sql = "UPDATE books SET shelfLocation = ? WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, newShelfLocation.name());
+            stmt.setLong(2, bookId);
+
+            checkUpdateResult(bookId, stmt);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     
     // I'm not sure if this method should be here
     private static void checkUpdateResult(Long bookId, PreparedStatement stmt) throws SQLException {

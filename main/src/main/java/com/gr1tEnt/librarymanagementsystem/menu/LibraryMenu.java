@@ -78,6 +78,7 @@ public class LibraryMenu {
             case 5 -> bookManagementSystem.updateYear();
             case 6 -> bookManagementSystem.updateCategory();
             case 7 -> bookManagementSystem.updateNumberOfCopies();
+            case 8 -> bookManagementSystem.updateShelfLocation();
             case 9 -> bookManagementSystem.updateStatus();
         }
     }

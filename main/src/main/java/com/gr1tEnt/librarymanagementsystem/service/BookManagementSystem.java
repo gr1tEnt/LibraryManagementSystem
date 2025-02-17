@@ -141,6 +141,13 @@ public class BookManagementSystem implements IBookManagementSystem {
         BookService.updateNumberOfCopies(bookId, newNumberOfCopies);
     }
 
+    public void updateShelfLocation() {
+        Long bookId = inputValidator.getValidId();
+        ShelfLocation newShelflocation = inputValidator.getValidShelfLocation();
+
+        BookService.updateShelfLocation(bookId, newShelflocation);
+    }
+
 
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override

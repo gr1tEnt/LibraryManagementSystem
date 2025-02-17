@@ -13,4 +13,5 @@ public interface IBookManagementSystem {
     void updateYear();
     void updateCategory();
     void updateNumberOfCopies();
+    void updateShelfLocation();
 }
