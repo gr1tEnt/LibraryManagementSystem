@@ -7,6 +7,7 @@ import com.gr1tEnt.librarymanagementsystem.model.Status;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.UUID;
 
 public class InputValidator {
     private final Scanner scanner;
@@ -15,18 +16,16 @@ public class InputValidator {
         this.scanner = scanner;
     }
 
-    // I'll improve this method after DB connection
-    public Long getValidId() {
-        long value;
-        while (true) {
+    public UUID getValidId() {
+        UUID value = null;
+        while (value == null) {
             System.out.println("Enter book's ID: ");
-            if (scanner.hasNextLong()) {
-                value = scanner.nextLong();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scanner.nextLine();
+            String input = scanner.nextLine();
+
+            try {
+                value = UUID.fromString(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Please enter a valid UUID.");
             }
         }
         return value;
@@ -115,7 +114,7 @@ public class InputValidator {
             for (ShelfLocation shelfLocation : ShelfLocation.values()) {
                 System.out.println(shelfLocation + " ");
             }
-            System.out.println("Enter a category: ");
+            System.out.println("Enter a location: ");
 
             String input = scanner.nextLine().trim().toUpperCase();
             try {

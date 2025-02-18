@@ -5,6 +5,7 @@ import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
 import java.util.Scanner;
 import java.util.Set;
+import java.util.UUID;
 
 public class BookManagementSystem implements IBookManagementSystem, IUpdateBookManagementSystem {
     public final Scanner scanner;
@@ -48,13 +49,13 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void removeBook() {
-        long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         BookService.removeBook(bookId);
     }
 
     @Override
     public void updateStatus() {
-        long bookId  = inputValidator.getValidId();
+        UUID bookId  = inputValidator.getValidId();
 
         Status newStatus = inputValidator.getValidStatus("Enter new status: ");
 
@@ -63,7 +64,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateIsbn() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
 
         System.out.println("Enter new ISBN: ");
         String newIsbn = scanner.nextLine();
@@ -73,7 +74,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateTitle() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
 
         System.out.println("Enter new title: ");
         String newTitle = scanner.nextLine();
@@ -83,7 +84,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateAuthors() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
 
         Set<String> newAuthors = inputValidator.getValidAuthors();
 
@@ -92,7 +93,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updatePublisher() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
 
         System.out.println("Enter new publisher: ");
         String newPublisher = scanner.nextLine();
@@ -102,14 +103,14 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateYear() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         int newYear = inputValidator.getValidYear();
 
         BookService.updateYear(bookId, newYear);
     }
     @Override
     public void updateCategory() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         Category newCategory = inputValidator.getValidCategory();
 
         BookService.updateCategory(bookId, newCategory);
@@ -117,7 +118,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateNumberOfCopies() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         int newNumberOfCopies = inputValidator.getValidInt("Enter new number of copies: ");
 
         BookService.updateNumberOfCopies(bookId, newNumberOfCopies);
@@ -125,7 +126,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
 
     @Override
     public void updateShelfLocation() {
-        Long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         ShelfLocation newShelflocation = inputValidator.getValidShelfLocation();
 
         BookService.updateShelfLocation(bookId, newShelflocation);
@@ -135,7 +136,7 @@ public class BookManagementSystem implements IBookManagementSystem, IUpdateBookM
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override
     public void trackCopies() {
-        long bookId = inputValidator.getValidId();
+        UUID bookId = inputValidator.getValidId();
         BookService.trackBookCopies(bookId);
     }
 

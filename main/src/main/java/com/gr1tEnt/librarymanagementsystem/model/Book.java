@@ -1,8 +1,9 @@
 package com.gr1tEnt.librarymanagementsystem.model;
 import java.util.Set;
+import java.util.UUID;
 
 public class Book {
-    private Long id;
+    private UUID id;
     private String isbn;
     private String title;
     private Set<String> authors;
@@ -25,8 +26,8 @@ public class Book {
         this.status = status;
     }
 
-    public Book(Long id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
-        this.id = id;
+    public Book(UUID id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
+        this.id = (id != null) ? id : UUID.randomUUID();
         this.isbn = isbn;
         this.title = title;
         this.authors = authors;
@@ -74,11 +75,11 @@ public class Book {
         return status;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
