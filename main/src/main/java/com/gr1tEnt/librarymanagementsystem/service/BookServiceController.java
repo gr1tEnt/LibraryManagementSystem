@@ -44,14 +44,26 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
 
         Book book = new Book(isbn, title, authors, publisher, publicationYear, category, numberOfCopies, shelfLocation, status);
 
-        bookService.addBook(book);
+        boolean isAdded = bookService.addBook(book);
+
+        if (isAdded) {
+            System.out.println("Book added successfully.");
+        } else {
+            System.out.println("failed to add the book.");
+        }
     }
 
 
     @Override
     public void removeBook() {
         UUID bookId = inputValidator.getValidId();
-        bookService.removeBook(bookId);
+        boolean isRemoved = bookService.removeBook(bookId);
+
+        if (isRemoved) {
+            System.out.println("Book removed successfully.");
+        } else {
+            System.out.println("No book found with such ID.");
+        }
     }
 
     @Override

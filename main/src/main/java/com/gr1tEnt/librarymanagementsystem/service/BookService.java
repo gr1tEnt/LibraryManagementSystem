@@ -17,14 +17,10 @@ public class BookService {
         this.conn = conn;
     }
 
-    public void addBook(Book book) {
+    public boolean addBook(Book book) {
         String sql = "INSERT INTO books (id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            if (book.getId() == null) {
-                book.setId(UUID.randomUUID());
-            }
 
             stmt.setString(1, book.getId().toString());
             stmt.setString(2, book.getIsbn());
@@ -38,29 +34,22 @@ public class BookService {
             stmt.setString(10, book.getStatus().name());
 
             int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Failed to insert book.");
-            }
+            return affectedRows > 0;
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    book.setId(UUID.fromString(generatedKeys.getString(1)));
-                    System.out.println("Book added with ID " + book.getId());
-                }
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void removeBook(UUID bookId) {
+    public boolean removeBook(UUID bookId) {
         String sql = "DELETE FROM books WHERE id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -230,16 +219,6 @@ public class BookService {
         }
     }
 
-    // I'm not sure if this method should be here
-    private void checkUpdateResult(UUID bookId, PreparedStatement stmt) throws SQLException {
-        int affectedRows = stmt.executeUpdate();
-        if (affectedRows == 0) {
-            System.out.println("No book found with id " + bookId);
-        } else {
-            System.out.println("Books has been updated.");
-        }
-    }
-
     public void trackBookCopies(UUID bookId) {
         String sql = "SELECT number_of_copies FROM books WHERE id = ?";
 
@@ -272,9 +251,5 @@ public class BookService {
                 System.out.println(book);
             }
         }
-    }
-
-    public static boolean bookExists(Long id) {
-        return books.contains(id);
     }
 }

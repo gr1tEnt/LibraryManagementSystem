@@ -3,7 +3,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Book {
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private String isbn;
     private String title;
     private Set<String> authors;
@@ -27,7 +27,7 @@ public class Book {
     }
 
     public Book(UUID id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
-        this.id = (id != null) ? id : UUID.randomUUID();
+        this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.authors = authors;
