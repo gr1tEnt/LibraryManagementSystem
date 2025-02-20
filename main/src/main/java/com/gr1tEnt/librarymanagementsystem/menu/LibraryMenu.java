@@ -3,16 +3,16 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
-import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
-import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookManagementSystem;
+import com.gr1tEnt.librarymanagementsystem.service.IBookServiceController;
+import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
 
 public class LibraryMenu {
-    private final IBookManagementSystem bookManagementSystem;
-    private final IUpdateBookManagementSystem updateBookManagementSystem;
+    private final IBookServiceController bookManagementSystem;
+    private final IUpdateBookServiceController updateBookManagementSystem;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookManagementSystem bookManagementSystem, IUpdateBookManagementSystem updateBookManagementSystem) {
+    public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem) {
         this.bookManagementSystem = bookManagementSystem;
         this.updateBookManagementSystem = updateBookManagementSystem;
     }

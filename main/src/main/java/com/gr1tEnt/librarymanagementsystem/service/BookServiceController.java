@@ -7,12 +7,12 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
-public class BookManagementSystem implements IBookManagementSystem, IUpdateBookManagementSystem {
+public class BookServiceController implements IBookServiceController, IUpdateBookServiceController {
     public final Scanner scanner;
     private final BookService bookService;
     private final InputValidator inputValidator;
 
-    public BookManagementSystem(BookService bookService, Scanner scanner, InputValidator inputValidator) {
+    public BookServiceController(BookService bookService, Scanner scanner, InputValidator inputValidator) {
         this.bookService = bookService;
         this.scanner = scanner;
         this.inputValidator = inputValidator;

@@ -1,6 +1,6 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
-public interface IUpdateBookManagementSystem {
+public interface IUpdateBookServiceController {
     void updateStatus();
     void updateIsbn();
     void updateTitle();
