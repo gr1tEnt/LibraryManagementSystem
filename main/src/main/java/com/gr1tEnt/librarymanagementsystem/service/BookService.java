@@ -11,12 +11,16 @@ import java.util.*;
 
 public class BookService {
     private static final List<Book> books = new ArrayList<>();
+    private final Connection conn;
 
-    public static void addBook(Book book) {
+    public BookService(Connection conn) {
+        this.conn = conn;
+    }
+
+    public void addBook(Book book) {
         String sql = "INSERT INTO books (id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             if (book.getId() == null) {
                 book.setId(UUID.randomUUID());
@@ -49,11 +53,10 @@ public class BookService {
         }
     }
 
-    public static void removeBook(UUID bookId) {
+    public void removeBook(UUID bookId) {
         String sql = "DELETE FROM books WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, bookId.toString());
 
@@ -64,11 +67,11 @@ public class BookService {
         }
     }
 
-    public static List<Book> getAllBooks() {
+    public List<Book> getAllBooks() {
         String sql = "SELECT * FROM books";
-        try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery()) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Book book = new Book(
@@ -92,11 +95,10 @@ public class BookService {
     }
 
     // AAALSO I'm not sure if update methods should be in this class, technically it's ok, but there are many of them here
-    public static void updateBookStatus(UUID bookId, Status newStatus) {
+    public void updateBookStatus(UUID bookId, Status newStatus) {
         String sql = "UPDATE books SET status = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newStatus.name());
             stmt.setString(2, bookId.toString());
@@ -108,11 +110,10 @@ public class BookService {
         }
     }
 
-    public static void updateIsbn(UUID bookId, String newIsbn) {
+    public void updateIsbn(UUID bookId, String newIsbn) {
         String sql = "UPDATE books SET isbn = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newIsbn);
             stmt.setString(2, bookId.toString());
@@ -124,11 +125,10 @@ public class BookService {
         }
     }
 
-    public static void updateTitle(UUID bookId, String newTitle) {
+    public void updateTitle(UUID bookId, String newTitle) {
         String sql = "UPDATE books SET title = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newTitle);
             stmt.setString(2, bookId.toString());
@@ -140,10 +140,10 @@ public class BookService {
         }
     }
 
-    public static void updateAuthors(UUID bookId, Set<String> newAuthors) {
+    public void updateAuthors(UUID bookId, Set<String> newAuthors) {
         String sql = "UPDATE books SET authors = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newAuthors.toString());
             stmt.setString(2, bookId.toString());
@@ -155,11 +155,10 @@ public class BookService {
         }
     }
 
-    public static void updatePublisher(UUID bookId, String newPublisher) {
+    public void updatePublisher(UUID bookId, String newPublisher) {
         String sql = "UPDATE books SET publisher = ? WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newPublisher);
             stmt.setString(2, bookId.toString());
@@ -171,10 +170,10 @@ public class BookService {
         }
     }
 
-    public static void updateYear(UUID bookId, int newYear) {
+    public void updateYear(UUID bookId, int newYear) {
         String sql = "UPDATE books SET publication_year = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, newYear);
             stmt.setString(2, bookId.toString());
@@ -186,10 +185,10 @@ public class BookService {
         }
     }
 
-    public static void updateCategory(UUID bookId, Category newCategory) {
+    public void updateCategory(UUID bookId, Category newCategory) {
         String sql = "UPDATE books SET category = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newCategory.name());
             stmt.setString(2, bookId.toString());
@@ -201,10 +200,10 @@ public class BookService {
         }
     }
 
-    public static void updateNumberOfCopies(UUID bookId, int newNumberOfCopies) {
+    public void updateNumberOfCopies(UUID bookId, int newNumberOfCopies) {
         String sql = "UPDATE books SET number_of_copies = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, newNumberOfCopies);
             stmt.setString(2, bookId.toString());
@@ -216,10 +215,10 @@ public class BookService {
         }
     }
 
-    public static void updateShelfLocation(UUID bookId, ShelfLocation newShelfLocation) {
+    public void updateShelfLocation(UUID bookId, ShelfLocation newShelfLocation) {
         String sql = "UPDATE books SET shelfLocation = ? WHERE id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, newShelfLocation.name());
             stmt.setString(2, bookId.toString());
@@ -231,9 +230,8 @@ public class BookService {
         }
     }
 
-    
     // I'm not sure if this method should be here
-    private static void checkUpdateResult(UUID bookId, PreparedStatement stmt) throws SQLException {
+    private void checkUpdateResult(UUID bookId, PreparedStatement stmt) throws SQLException {
         int affectedRows = stmt.executeUpdate();
         if (affectedRows == 0) {
             System.out.println("No book found with id " + bookId);
@@ -242,16 +240,15 @@ public class BookService {
         }
     }
 
-    public static void trackBookCopies(UUID bookId) {
+    public void trackBookCopies(UUID bookId) {
         String sql = "SELECT number_of_copies FROM books WHERE id = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, bookId.toString());
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()){
+                if (rs.next()) {
                     int copies = rs.getInt("number_of_copies");
                     System.out.println("Number of copies: " + copies);
                 } else {
@@ -264,7 +261,7 @@ public class BookService {
         }
     }
 
-    public static void printAllBooks() {
+    public void printAllBooks() {
         List<Book> books = getAllBooks();
 
         if (books == null || books.isEmpty()) {

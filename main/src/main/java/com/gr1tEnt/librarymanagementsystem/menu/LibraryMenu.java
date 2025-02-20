@@ -9,12 +9,14 @@ import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
 public class LibraryMenu {
     private final IBookServiceController bookManagementSystem;
     private final IUpdateBookServiceController updateBookManagementSystem;
+    private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem) {
+    public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem, BookService bookService) {
         this.bookManagementSystem = bookManagementSystem;
         this.updateBookManagementSystem = updateBookManagementSystem;
+        this.bookService = bookService;
     }
 
 
@@ -56,7 +58,7 @@ public class LibraryMenu {
             case 2 -> updateBook();
             case 3 -> bookManagementSystem.removeBook();
             case 4 -> bookManagementSystem.trackCopies();
-            case 5 -> BookService.printAllBooks();
+            case 5 -> bookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
         }
     }
