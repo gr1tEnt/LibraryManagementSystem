@@ -68,7 +68,7 @@ public class BookService {
     }
 
     public List<Book> getAllBooks() {
-        String sql = "SELECT * FROM books";
+        String sql = "SELECT id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status FROM books";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
