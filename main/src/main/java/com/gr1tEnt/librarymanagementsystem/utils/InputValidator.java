@@ -31,7 +31,7 @@ public class InputValidator {
         return value;
     }
 
-    public int getValidInt (String message) {
+    public int getValidInt(String message) {
         int value;
         while (true) {
             System.out.println(message);
@@ -47,7 +47,7 @@ public class InputValidator {
         return value;
     }
 
-    public Status getValidStatus (String message) {
+    public Status getValidStatus(String message) {
         while (true) {
             System.out.println(message);
             String statusInput = scanner.nextLine().toUpperCase().trim();
@@ -124,7 +124,6 @@ public class InputValidator {
             }
         }
     }
-
 
 
 }

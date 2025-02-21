@@ -252,4 +252,22 @@ public class BookService {
             }
         }
     }
+
+    public boolean isBookExists(UUID bookId) {
+        String sql = "SELECT COUNT(*) FROM books WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, bookId.toString());
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 }
