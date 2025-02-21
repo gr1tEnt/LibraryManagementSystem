@@ -5,6 +5,7 @@ import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
+import java.time.Year;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class InputValidator {
                 value = UUID.fromString(input);
 
                 if (!bookService.isBookExists(value)) {
-                    System.out.println("Book with ID " + value + "doesn't exist. Please enter a valid ID.");
+                    System.out.println("Book with ID " + value + " doesn't exist. Please enter a valid ID.");
                     value = null;
                 }
             } catch (IllegalArgumentException e) {
@@ -39,7 +40,7 @@ public class InputValidator {
         return value;
     }
 
-    public int getValidInt(String message) {
+    public int getValidIntOptions(String message) {
         int value;
         while (true) {
             System.out.println(message);
@@ -55,7 +56,7 @@ public class InputValidator {
         return value;
     }
 
-    public Status getValidStatus(String message) {
+    public Status getValidStatusOptions(String message) {
         while (true) {
             System.out.println(message);
             String statusInput = scanner.nextLine().toUpperCase().trim();
@@ -67,7 +68,7 @@ public class InputValidator {
         }
     }
 
-    public Set<String> getValidAuthors() {
+    public Set<String> getValidAuthorsOptions() {
         Set<String> authors = new HashSet<>();
         while (true) {
             System.out.println("Enter author (type 'done' to finish):");
@@ -84,7 +85,7 @@ public class InputValidator {
         return authors;
     }
 
-    public Category getValidCategory() {
+    public Category getValidCategoryOptions() {
         while (true) {
             System.out.println("Enter category. Available categories: ");
             for (Category category : Category.values()) {
@@ -101,14 +102,23 @@ public class InputValidator {
         }
     }
 
-    public int getValidYear() {
+    public int getValidYearOptions() {
         int newPublicationYear;
+        int currentYear = Year.now().getValue();
+        int minYear = 1450;
+
         while (true) {
-            System.out.println("Enter publication year: ");
+            System.out.println("Enter publication year (" + minYear + " - " + currentYear + "); ");
+
             if (scanner.hasNextInt()) {
                 newPublicationYear = scanner.nextInt();
                 scanner.nextLine();
-                return newPublicationYear;
+                if (newPublicationYear >= minYear && newPublicationYear <= currentYear) {
+                    return newPublicationYear;
+                } else {
+                    System.out.println("Invalid year. Please enter a valid year between " + minYear + " and " + currentYear);
+                }
+
             } else {
                 System.out.println("Invalid input. Please enter a valid publication year.");
                 scanner.nextLine();
@@ -116,7 +126,7 @@ public class InputValidator {
         }
     }
 
-    public ShelfLocation getValidShelfLocation() {
+    public ShelfLocation getValidShelfLocationOptions() {
         while (true) {
             System.out.println("Enter shelf location. Available locations: ");
             for (ShelfLocation shelfLocation : ShelfLocation.values()) {

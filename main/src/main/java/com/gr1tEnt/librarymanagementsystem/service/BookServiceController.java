@@ -27,20 +27,20 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
 
-        Set<String> authors = inputValidator.getValidAuthors();
+        Set<String> authors = inputValidator.getValidAuthorsOptions();
 
         System.out.println("Enter publisher: ");
         String publisher = scanner.nextLine();
 
-        int publicationYear = inputValidator.getValidYear();
+        int publicationYear = inputValidator.getValidYearOptions();
 
-        Category category = inputValidator.getValidCategory();
+        Category category = inputValidator.getValidCategoryOptions();
 
-        int numberOfCopies = inputValidator.getValidInt("Enter numberOfCopies: ");
+        int numberOfCopies = inputValidator.getValidIntOptions("Enter numberOfCopies: ");
 
-        ShelfLocation shelfLocation = inputValidator.getValidShelfLocation();
+        ShelfLocation shelfLocation = inputValidator.getValidShelfLocationOptions();
 
-        Status status = inputValidator.getValidStatus("Enter status: ");
+        Status status = inputValidator.getValidStatusOptions("Enter status: ");
 
         Book book = new Book(isbn, title, authors, publisher, publicationYear, category, numberOfCopies, shelfLocation, status);
 
@@ -70,7 +70,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     public void updateStatus() {
         UUID bookId = inputValidator.getValidId();
 
-        Status newStatus = inputValidator.getValidStatus("Enter new status: ");
+        Status newStatus = inputValidator.getValidStatusOptions("Enter new status: ");
 
         bookService.updateBookStatus(bookId, newStatus);
     }
@@ -99,7 +99,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     public void updateAuthors() {
         UUID bookId = inputValidator.getValidId();
 
-        Set<String> newAuthors = inputValidator.getValidAuthors();
+        Set<String> newAuthors = inputValidator.getValidAuthorsOptions();
 
         bookService.updateAuthors(bookId, newAuthors);
     }
@@ -117,7 +117,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     @Override
     public void updateYear() {
         UUID bookId = inputValidator.getValidId();
-        int newYear = inputValidator.getValidYear();
+        int newYear = inputValidator.getValidYearOptions();
 
         bookService.updateYear(bookId, newYear);
     }
@@ -125,7 +125,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     @Override
     public void updateCategory() {
         UUID bookId = inputValidator.getValidId();
-        Category newCategory = inputValidator.getValidCategory();
+        Category newCategory = inputValidator.getValidCategoryOptions();
 
         bookService.updateCategory(bookId, newCategory);
     }
@@ -133,7 +133,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     @Override
     public void updateNumberOfCopies() {
         UUID bookId = inputValidator.getValidId();
-        int newNumberOfCopies = inputValidator.getValidInt("Enter new number of copies: ");
+        int newNumberOfCopies = inputValidator.getValidIntOptions("Enter new number of copies: ");
 
         bookService.updateNumberOfCopies(bookId, newNumberOfCopies);
     }
@@ -141,7 +141,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     @Override
     public void updateShelfLocation() {
         UUID bookId = inputValidator.getValidId();
-        ShelfLocation newShelflocation = inputValidator.getValidShelfLocation();
+        ShelfLocation newShelflocation = inputValidator.getValidShelfLocationOptions();
 
         bookService.updateShelfLocation(bookId, newShelflocation);
     }

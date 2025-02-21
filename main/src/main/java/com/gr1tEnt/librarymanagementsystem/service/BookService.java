@@ -92,7 +92,7 @@ public class BookService {
             stmt.setString(1, newStatus.name());
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -107,7 +107,7 @@ public class BookService {
             stmt.setString(1, newIsbn);
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -122,7 +122,7 @@ public class BookService {
             stmt.setString(1, newTitle);
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -137,7 +137,7 @@ public class BookService {
             stmt.setString(1, newAuthors.toString());
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -152,7 +152,7 @@ public class BookService {
             stmt.setString(1, newPublisher);
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -167,7 +167,7 @@ public class BookService {
             stmt.setInt(1, newYear);
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -182,7 +182,7 @@ public class BookService {
             stmt.setString(1, newCategory.name());
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -197,7 +197,7 @@ public class BookService {
             stmt.setInt(1, newNumberOfCopies);
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -212,7 +212,7 @@ public class BookService {
             stmt.setString(1, newShelfLocation.name());
             stmt.setString(2, bookId.toString());
 
-            checkUpdateResult(bookId, stmt);
+            //checkUpdateResult(bookId, stmt);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
