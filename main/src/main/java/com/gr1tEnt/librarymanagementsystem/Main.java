@@ -17,7 +17,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         Connection connection = DatabaseConnection.getConnection();
         BookService bookService = new BookService(connection);
-        InputValidator inputValidator = new InputValidator(scanner);
+        InputValidator inputValidator = new InputValidator(scanner, bookService);
         IBookServiceController bookManagementSystem  = new BookServiceController(bookService, scanner, inputValidator);
         IUpdateBookServiceController updateBookManagementSystem = new BookServiceController(bookService, scanner, inputValidator);
         LibraryMenu menu = new LibraryMenu(bookManagementSystem, updateBookManagementSystem, bookService);

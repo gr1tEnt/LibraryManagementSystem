@@ -3,6 +3,7 @@ package com.gr1tEnt.librarymanagementsystem.utils;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
+import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -11,9 +12,11 @@ import java.util.UUID;
 
 public class InputValidator {
     private final Scanner scanner;
+    private final BookService bookService;
 
-    public InputValidator(Scanner scanner) {
+    public InputValidator(Scanner scanner, BookService bookService) {
         this.scanner = scanner;
+        this.bookService = bookService;
     }
 
     public UUID getValidId() {
@@ -24,6 +27,11 @@ public class InputValidator {
 
             try {
                 value = UUID.fromString(input);
+
+                if (!bookService.isBookExists(value)) {
+                    System.out.println("Book with ID " + value + "doesn't exist. Please enter a valid ID.");
+                    value = null;
+                }
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid input. Please enter a valid UUID.");
             }
