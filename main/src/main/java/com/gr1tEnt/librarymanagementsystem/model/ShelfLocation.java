@@ -4,6 +4,7 @@ public enum ShelfLocation {
     NEW_ARRIVALS,
     RESERVE,
     ARCHIVE,
-    UNKNOWN,
+    UNASSIGNED,
+    IN_PROCESS,
     GENRE_SECTION
 }
