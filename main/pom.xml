@@ -6,8 +6,13 @@
   <version>1.0-SNAPSHOT</version>
   <name>Archetype - main</name>
   <url>http://maven.apache.org</url>
-
-  <!-- Dependencies -->
+    <repositories>
+        <repository>
+            <id>jitpack</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    <!-- Dependencies -->
   <dependencies>
     <!-- MySQL Connector -->
     <dependency>
@@ -15,6 +20,12 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>8.0.33</version>
     </dependency>
+
+      <dependency>
+          <groupId>io.github.cdimascio</groupId>
+          <artifactId>java-dotenv</artifactId>
+          <version>5.2.2</version>
+      </dependency>
 
     <!-- JPA API -->
     <dependency>

@@ -3,16 +3,23 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
-import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
+import com.gr1tEnt.librarymanagementsystem.service.IBookServiceController;
+import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
 
 public class LibraryMenu {
-    private final IBookManagementSystem bookManagementSystem;
+    private final IBookServiceController bookServiceController;
+    private final IUpdateBookServiceController updateBookServiceController;
+    private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookManagementSystem bookManagementSystem) {
-        this.bookManagementSystem = bookManagementSystem;
+    public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem, BookService bookService) {
+        this.bookServiceController = bookManagementSystem;
+        this.updateBookServiceController = updateBookManagementSystem;
+        this.bookService = bookService;
     }
+
+
 
     public void start() {
         int choice;
@@ -35,26 +42,51 @@ public class LibraryMenu {
         } while (choice != 6);
     }
 
-    public void bookManagement(){
+    public void bookManagement() {
         System.out.println("\nBook Management");
         System.out.println("1. Add new books");
         System.out.println("2. Update book information");
         System.out.println("3. Remove books");
         System.out.println("4. Track book copies");
-        System.out.println("5. Set new status");
-        System.out.println("6. Show all books");
+        System.out.println("5. Show all books");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
 
         switch (choice) {
-            case 1 -> bookManagementSystem.addNewBook();
-            case 2 -> bookManagementSystem.updateBook();
-            case 3 -> bookManagementSystem.removeBook();
-            case 4 -> bookManagementSystem.trackCopies();
-            case 5 -> bookManagementSystem.updateStatus();
-            case 6 -> BookService.printAllBooks(BookService.getAllBooks());
+            case 1 -> bookServiceController.addNewBook();
+            case 2 -> updateBook();
+            case 3 -> bookServiceController.removeBook();
+            case 4 -> bookServiceController.trackCopies();
+            case 5 -> bookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
+        }
+    }
+
+    private void updateBook() {
+        System.out.println("1. Update isbn");
+        System.out.println("2. Update title");
+        System.out.println("3. Update authors");
+        System.out.println("4. Update publisher");
+        System.out.println("5. Update year");
+        System.out.println("6. Update category");
+        System.out.println("7. Update number of copies");
+        System.out.println("8. Update shelf location");
+        System.out.println("9. Update status");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (choice) {
+            case 1 -> updateBookServiceController.updateIsbn();
+            case 2 -> updateBookServiceController.updateTitle();
+            case 3 -> updateBookServiceController.updateAuthors();
+            case 4 -> updateBookServiceController.updatePublisher();
+            case 5 -> updateBookServiceController.updateYear();
+            case 6 -> updateBookServiceController.updateCategory();
+            case 7 -> updateBookServiceController.updateNumberOfCopies();
+            case 8 -> updateBookServiceController.updateShelfLocation();
+            case 9 -> updateBookServiceController.updateStatus();
         }
     }
 
