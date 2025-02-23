@@ -7,12 +7,12 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
-public class BookServiceController implements IBookServiceController {
+public class BookManager implements BookManagerInterface {
     public final Scanner scanner;
     private final BookService bookService;
     private final InputValidator inputValidator;
 
-    public BookServiceController(BookService bookService, Scanner scanner, InputValidator inputValidator) {
+    public BookManager(BookService bookService, Scanner scanner, InputValidator inputValidator) {
         this.bookService = bookService;
         this.scanner = scanner;
         this.inputValidator = inputValidator;
@@ -20,40 +20,28 @@ public class BookServiceController implements IBookServiceController {
 
     @Override
     public void addNewBook() {
-
         String isbn = inputValidator.getValidIsbnOptions();
-
-        System.out.println("Enter title: ");
-        String title = scanner.nextLine();
-
+        String title = inputValidator.getValidStringOptions("Enter title: ");
         Set<String> authors = inputValidator.getValidAuthorsOptions();
-
-        System.out.println("Enter publisher: ");
-        String publisher = scanner.nextLine();
-
+        String publisher = inputValidator.getValidStringOptions("Enter publisher: ");
         int publicationYear = inputValidator.getValidYearOptions();
-
         Category category = inputValidator.getValidCategoryOptions();
-
-        int numberOfCopies = inputValidator.getValidIntOptions("Enter number of copies: ");
-
+        int numberOfCopies = inputValidator.getValidIntOptions();
         ShelfLocation shelfLocation = inputValidator.getValidShelfLocationOptions();
-
-        Status status = inputValidator.getValidStatusOptions("Enter status: ");
+        Status status = inputValidator.getValidStatusOptions();
 
         Book book = new Book(isbn, title, authors, publisher, publicationYear, category, numberOfCopies, shelfLocation, status);
 
         boolean isAdded = bookService.addBook(book);
-
         if (isAdded) {
             System.out.println("Book added successfully.");
         } else {
-            System.out.println("failed to add the book.");
+            System.out.println("Failed to add the book. Please check the input values.");
         }
     }
 
     @Override
-    public void removeBook() {
+    public void removeBookById() {
         UUID bookId = inputValidator.getValidId();
         boolean isRemoved = bookService.removeBook(bookId);
 
@@ -64,7 +52,7 @@ public class BookServiceController implements IBookServiceController {
         }
     }
 
-    public void updateBook() {
+    public void updateBookField() {
         UUID bookId = inputValidator.getValidId();
         String bookColumn = inputValidator.getValidBookColumnOptions().toString().toLowerCase();
 
@@ -73,14 +61,14 @@ public class BookServiceController implements IBookServiceController {
 
         switch (bookColumn) {
             case "isbn" -> newValue = inputValidator.getValidIsbnOptions();
-            case "title" -> newValue = scanner.nextLine();
+            case "title" -> newValue = inputValidator.getValidStringOptions("Enter new title: ");
             case "authors" -> newValue = inputValidator.getValidAuthorsOptions();
-            case "publisher" -> newValue = scanner.nextLine();
+            case "publisher" -> newValue = inputValidator.getValidStringOptions("Enter new publisher: ");
             case "publication_year" -> newValue = inputValidator.getValidYearOptions();
             case "category" -> newValue = inputValidator.getValidCategoryOptions();
-            case "number_of_copies" -> newValue = inputValidator.getValidIntOptions("Enter number of copies: ");
+            case "number_of_copies" -> newValue = inputValidator.getValidIntOptions();
             case "shelf_location" -> newValue = inputValidator.getValidShelfLocationOptions();
-            case "status" -> newValue = inputValidator.getValidStatusOptions("Enter new status: ");
+            case "status" -> newValue = inputValidator.getValidStatusOptions();
             default -> System.out.println("Incorrect choice.");
         }
 
@@ -96,7 +84,6 @@ public class BookServiceController implements IBookServiceController {
     @Override
     public void trackCopies() {
         UUID bookId = inputValidator.getValidId();
-
         bookService.trackBookCopies(bookId);
     }
 

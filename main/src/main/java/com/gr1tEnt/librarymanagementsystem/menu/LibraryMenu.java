@@ -3,21 +3,18 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
-import com.gr1tEnt.librarymanagementsystem.service.IBookServiceController;
-import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
+import com.gr1tEnt.librarymanagementsystem.service.BookManagerInterface;
 
 public class LibraryMenu {
-    private final IBookServiceController bookServiceController;
+    private final BookManagerInterface bookServiceController;
     private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookServiceController bookManagementSystem, BookService bookService) {
+    public LibraryMenu(BookManagerInterface bookManagementSystem, BookService bookService) {
         this.bookServiceController = bookManagementSystem;
         this.bookService = bookService;
     }
-
-
 
     public void start() {
         int choice;
@@ -53,41 +50,13 @@ public class LibraryMenu {
 
         switch (choice) {
             case 1 -> bookServiceController.addNewBook();
-            case 2 -> bookServiceController.updateBook();
-            case 3 -> bookServiceController.removeBook();
+            case 2 -> bookServiceController.updateBookField();
+            case 3 -> bookServiceController.removeBookById();
             case 4 -> bookServiceController.trackCopies();
             case 5 -> bookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
         }
     }
-
-/*    private void updateBook() {
-        System.out.println("1. Update isbn");
-        System.out.println("2. Update title");
-        System.out.println("3. Update authors");
-        System.out.println("4. Update publisher");
-        System.out.println("5. Update year");
-        System.out.println("6. Update category");
-        System.out.println("7. Update number of copies");
-        System.out.println("8. Update shelf location");
-        System.out.println("9. Update status");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (choice) {
-            case 1 -> updateBookServiceController.updateIsbn();
-            case 2 -> updateBookServiceController.updateTitle();
-            case 3 -> updateBookServiceController.updateAuthors();
-            case 4 -> updateBookServiceController.updatePublisher();
-            case 5 -> updateBookServiceController.updateYear();
-            case 6 -> updateBookServiceController.updateCategory();
-            case 7 -> updateBookServiceController.updateNumberOfCopies();
-            case 8 -> updateBookServiceController.updateShelfLocation();
-            case 9 -> updateBookServiceController.updateStatus();
-        }
-    }*/
-
 
 //Search by Properties in development
     private static void searchBooks(Scanner scanner) {

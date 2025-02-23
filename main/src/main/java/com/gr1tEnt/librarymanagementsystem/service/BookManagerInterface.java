@@ -1,8 +1,8 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
-public interface IBookServiceController {
+public interface BookManagerInterface {
     void addNewBook();
-    void removeBook();
+    void removeBookById();
     void trackCopies();
-    void updateBook();
+    void updateBookField();
 }
