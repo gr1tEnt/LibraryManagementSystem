@@ -1,5 +1,6 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
+import com.gr1tEnt.librarymanagementsystem.model.BookColumn;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
@@ -161,5 +162,22 @@ public class InputValidator {
         }
     }
 
+    public BookColumn getValidBookColumnOptions() {
+        while (true) {
+            System.out.println("Enter book's column. Available locations: ");
+
+            for (BookColumn bookColumn : BookColumn.values()) {
+                System.out.println(bookColumn + " ");
+            }
+            System.out.println("Enter book's column: ");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            try {
+                return BookColumn.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid column. Please try again.");
+            }
+        }
+    }
 
 }

@@ -6,6 +6,7 @@ import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
@@ -83,136 +84,16 @@ public class BookService {
         return books;
     }
 
-    // AAALSO I'm not sure if update methods should be in this class, technically it's ok, but there are many of them here
-    public void updateBookStatus(UUID bookId, Status newStatus) {
-        String sql = "UPDATE books SET status = ? WHERE id = ?";
+    public boolean updateBookField(UUID bookId, String bookColumn, Object newValue) {
+        String sql = "UPDATE books SET " + bookColumn + " = ? WHERE id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, newStatus.name());
-            stmt.setString(2, bookId.toString());
+            stmt.setString(1, String.valueOf(newValue));
+            stmt.setString(2, String.valueOf(bookId));
 
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateIsbn(UUID bookId, String newIsbn) {
-        String sql = "UPDATE books SET isbn = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newIsbn);
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateTitle(UUID bookId, String newTitle) {
-        String sql = "UPDATE books SET title = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newTitle);
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateAuthors(UUID bookId, Set<String> newAuthors) {
-        String sql = "UPDATE books SET authors = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newAuthors.toString());
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updatePublisher(UUID bookId, String newPublisher) {
-        String sql = "UPDATE books SET publisher = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newPublisher);
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateYear(UUID bookId, int newYear) {
-        String sql = "UPDATE books SET publication_year = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, newYear);
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateCategory(UUID bookId, Category newCategory) {
-        String sql = "UPDATE books SET category = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newCategory.name());
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateNumberOfCopies(UUID bookId, int newNumberOfCopies) {
-        String sql = "UPDATE books SET number_of_copies = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, newNumberOfCopies);
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void updateShelfLocation(UUID bookId, ShelfLocation newShelfLocation) {
-        String sql = "UPDATE books SET shelf_location = ? WHERE id = ?";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newShelfLocation.name());
-            stmt.setString(2, bookId.toString());
-
-            //checkUpdateResult(bookId, stmt);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -8,14 +8,12 @@ import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
 
 public class LibraryMenu {
     private final IBookServiceController bookServiceController;
-    private final IUpdateBookServiceController updateBookServiceController;
     private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem, BookService bookService) {
+    public LibraryMenu(IBookServiceController bookManagementSystem, BookService bookService) {
         this.bookServiceController = bookManagementSystem;
-        this.updateBookServiceController = updateBookManagementSystem;
         this.bookService = bookService;
     }
 
@@ -55,7 +53,7 @@ public class LibraryMenu {
 
         switch (choice) {
             case 1 -> bookServiceController.addNewBook();
-            case 2 -> updateBook();
+            case 2 -> bookServiceController.updateBook();
             case 3 -> bookServiceController.removeBook();
             case 4 -> bookServiceController.trackCopies();
             case 5 -> bookService.printAllBooks();
@@ -63,7 +61,7 @@ public class LibraryMenu {
         }
     }
 
-    private void updateBook() {
+/*    private void updateBook() {
         System.out.println("1. Update isbn");
         System.out.println("2. Update title");
         System.out.println("3. Update authors");
@@ -88,7 +86,7 @@ public class LibraryMenu {
             case 8 -> updateBookServiceController.updateShelfLocation();
             case 9 -> updateBookServiceController.updateStatus();
         }
-    }
+    }*/
 
 
 //Search by Properties in development

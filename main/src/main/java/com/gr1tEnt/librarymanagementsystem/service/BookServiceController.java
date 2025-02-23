@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
-public class BookServiceController implements IBookServiceController, IUpdateBookServiceController {
+public class BookServiceController implements IBookServiceController {
     public final Scanner scanner;
     private final BookService bookService;
     private final InputValidator inputValidator;
@@ -52,7 +52,6 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
         }
     }
 
-
     @Override
     public void removeBook() {
         UUID bookId = inputValidator.getValidId();
@@ -65,85 +64,33 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
         }
     }
 
-    @Override
-    public void updateStatus() {
+    public void updateBook() {
         UUID bookId = inputValidator.getValidId();
+        String bookColumn = inputValidator.getValidBookColumnOptions().toString().toLowerCase();
 
-        Status newStatus = inputValidator.getValidStatusOptions("Enter new status: ");
+        System.out.println("Enter new value: ");
+        Object newValue = null;
 
-        bookService.updateBookStatus(bookId, newStatus);
+        switch (bookColumn) {
+            case "isbn" -> newValue = inputValidator.getValidIsbnOptions();
+            case "title" -> newValue = scanner.nextLine();
+            case "authors" -> newValue = inputValidator.getValidAuthorsOptions();
+            case "publisher" -> newValue = scanner.nextLine();
+            case "publication_year" -> newValue = inputValidator.getValidYearOptions();
+            case "category" -> newValue = inputValidator.getValidCategoryOptions();
+            case "number_of_copies" -> newValue = inputValidator.getValidIntOptions("Enter number of copies: ");
+            case "shelf_location" -> newValue = inputValidator.getValidShelfLocationOptions();
+            case "status" -> newValue = inputValidator.getValidStatusOptions("Enter new status: ");
+            default -> System.out.println("Incorrect choice.");
+        }
+
+        boolean isUpdated = bookService.updateBookField(bookId, bookColumn, newValue);
+        if (isUpdated) {
+            System.out.println("Book updated successfully.");
+        } else {
+            System.out.println("No book found with such ID.");
+        }
     }
-
-    @Override
-    public void updateIsbn() {
-        UUID bookId = inputValidator.getValidId();
-
-        String newIsbn = inputValidator.getValidIsbnOptions();
-
-        bookService.updateIsbn(bookId, newIsbn);
-    }
-
-    @Override
-    public void updateTitle() {
-        UUID bookId = inputValidator.getValidId();
-
-        System.out.println("Enter new title: ");
-        String newTitle = scanner.nextLine();
-
-        bookService.updateTitle(bookId, newTitle);
-    }
-
-    @Override
-    public void updateAuthors() {
-        UUID bookId = inputValidator.getValidId();
-
-        Set<String> newAuthors = inputValidator.getValidAuthorsOptions();
-
-        bookService.updateAuthors(bookId, newAuthors);
-    }
-
-    @Override
-    public void updatePublisher() {
-        UUID bookId = inputValidator.getValidId();
-
-        System.out.println("Enter new publisher: ");
-        String newPublisher = scanner.nextLine();
-
-        bookService.updatePublisher(bookId, newPublisher);
-    }
-
-    @Override
-    public void updateYear() {
-        UUID bookId = inputValidator.getValidId();
-        int newYear = inputValidator.getValidYearOptions();
-
-        bookService.updateYear(bookId, newYear);
-    }
-
-    @Override
-    public void updateCategory() {
-        UUID bookId = inputValidator.getValidId();
-        Category newCategory = inputValidator.getValidCategoryOptions();
-
-        bookService.updateCategory(bookId, newCategory);
-    }
-
-    @Override
-    public void updateNumberOfCopies() {
-        UUID bookId = inputValidator.getValidId();
-        int newNumberOfCopies = inputValidator.getValidIntOptions("Enter new number of copies: ");
-
-        bookService.updateNumberOfCopies(bookId, newNumberOfCopies);
-    }
-
-    @Override
-    public void updateShelfLocation() {
-        UUID bookId = inputValidator.getValidId();
-        ShelfLocation newShelflocation = inputValidator.getValidShelfLocationOptions();
-
-        bookService.updateShelfLocation(bookId, newShelflocation);
-    }
-
 
     // I'll add ability to see the quantity of books, using title, authors etc.
     @Override

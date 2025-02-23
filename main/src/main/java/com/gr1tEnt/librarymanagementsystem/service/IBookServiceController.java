@@ -4,4 +4,5 @@ public interface IBookServiceController {
     void addNewBook();
     void removeBook();
     void trackCopies();
+    void updateBook();
 }
