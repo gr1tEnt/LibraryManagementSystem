@@ -7,15 +7,15 @@ import com.gr1tEnt.librarymanagementsystem.service.IBookServiceController;
 import com.gr1tEnt.librarymanagementsystem.service.IUpdateBookServiceController;
 
 public class LibraryMenu {
-    private final IBookServiceController bookManagementSystem;
-    private final IUpdateBookServiceController updateBookManagementSystem;
+    private final IBookServiceController bookServiceController;
+    private final IUpdateBookServiceController updateBookServiceController;
     private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
     public LibraryMenu(IBookServiceController bookManagementSystem, IUpdateBookServiceController updateBookManagementSystem, BookService bookService) {
-        this.bookManagementSystem = bookManagementSystem;
-        this.updateBookManagementSystem = updateBookManagementSystem;
+        this.bookServiceController = bookManagementSystem;
+        this.updateBookServiceController = updateBookManagementSystem;
         this.bookService = bookService;
     }
 
@@ -54,10 +54,10 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
-            case 1 -> bookManagementSystem.addNewBook();
+            case 1 -> bookServiceController.addNewBook();
             case 2 -> updateBook();
-            case 3 -> bookManagementSystem.removeBook();
-            case 4 -> bookManagementSystem.trackCopies();
+            case 3 -> bookServiceController.removeBook();
+            case 4 -> bookServiceController.trackCopies();
             case 5 -> bookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
         }
@@ -78,15 +78,15 @@ public class LibraryMenu {
         scanner.nextLine();
 
         switch (choice) {
-            case 1 -> updateBookManagementSystem.updateIsbn();
-            case 2 -> updateBookManagementSystem.updateTitle();
-            case 3 -> updateBookManagementSystem.updateAuthors();
-            case 4 -> updateBookManagementSystem.updatePublisher();
-            case 5 -> updateBookManagementSystem.updateYear();
-            case 6 -> updateBookManagementSystem.updateCategory();
-            case 7 -> updateBookManagementSystem.updateNumberOfCopies();
-            case 8 -> updateBookManagementSystem.updateShelfLocation();
-            case 9 -> updateBookManagementSystem.updateStatus();
+            case 1 -> updateBookServiceController.updateIsbn();
+            case 2 -> updateBookServiceController.updateTitle();
+            case 3 -> updateBookServiceController.updateAuthors();
+            case 4 -> updateBookServiceController.updatePublisher();
+            case 5 -> updateBookServiceController.updateYear();
+            case 6 -> updateBookServiceController.updateCategory();
+            case 7 -> updateBookServiceController.updateNumberOfCopies();
+            case 8 -> updateBookServiceController.updateShelfLocation();
+            case 9 -> updateBookServiceController.updateStatus();
         }
     }
 
