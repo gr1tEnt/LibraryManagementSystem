@@ -18,7 +18,7 @@ public class BookService {
     }
 
     public boolean addBook(Book book) {
-        String sql = "INSERT INTO books (id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO books (id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelf_location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -57,7 +57,7 @@ public class BookService {
     }
 
     public List<Book> getAllBooks() {
-        String sql = "SELECT id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelfLocation, status FROM books";
+        String sql = "SELECT id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelf_location, status FROM books";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -72,7 +72,7 @@ public class BookService {
                         rs.getInt("publication_year"),
                         Category.valueOf(rs.getString("category")),
                         rs.getInt("number_of_copies"),
-                        ShelfLocation.valueOf(rs.getString("shelfLocation")),
+                        ShelfLocation.valueOf(rs.getString("shelf_location")),
                         Status.valueOf(rs.getString("status"))
                 );
                 books.add(book);
@@ -205,7 +205,7 @@ public class BookService {
     }
 
     public void updateShelfLocation(UUID bookId, ShelfLocation newShelfLocation) {
-        String sql = "UPDATE books SET shelfLocation = ? WHERE id = ?";
+        String sql = "UPDATE books SET shelf_location = ? WHERE id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 

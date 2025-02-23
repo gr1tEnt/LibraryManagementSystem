@@ -35,7 +35,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
 
         Category category = inputValidator.getValidCategoryOptions();
 
-        int numberOfCopies = inputValidator.getValidIntOptions("Enter numberOfCopies: ");
+        int numberOfCopies = inputValidator.getValidIntOptions("Enter number of copies: ");
 
         ShelfLocation shelfLocation = inputValidator.getValidShelfLocationOptions();
 
