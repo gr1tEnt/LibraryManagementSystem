@@ -40,6 +40,24 @@ public class InputValidator {
         return value;
     }
 
+    // I'll improve this method later, cuz it requires pattern knowledge
+    public String getValidIsbnOptions() {
+        while (true) {
+            System.out.println("Enter ISBN (10-13 digits: )");
+            String input = scanner.nextLine().trim();
+
+            if (isValidIsbn(input)) {
+                return input;
+            } else {
+                System.out.println("Invalid ISBN. Please try again.");
+            }
+        }
+    }
+
+    private boolean isValidIsbn(String isbn) {
+        return (isbn.length() == 10 || isbn.length() == 13 && isbn.chars().allMatch(Character::isDigit));
+    }
+
     public int getValidIntOptions(String message) {
         int value;
         while (true) {

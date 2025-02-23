@@ -21,8 +21,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     @Override
     public void addNewBook() {
 
-        System.out.println("Enter ISBN: ");
-        String isbn = scanner.nextLine();
+        String isbn = inputValidator.getValidIsbnOptions();
 
         System.out.println("Enter title: ");
         String title = scanner.nextLine();
@@ -79,8 +78,7 @@ public class BookServiceController implements IBookServiceController, IUpdateBoo
     public void updateIsbn() {
         UUID bookId = inputValidator.getValidId();
 
-        System.out.println("Enter new ISBN: ");
-        String newIsbn = scanner.nextLine();
+        String newIsbn = inputValidator.getValidIsbnOptions();
 
         bookService.updateIsbn(bookId, newIsbn);
     }
