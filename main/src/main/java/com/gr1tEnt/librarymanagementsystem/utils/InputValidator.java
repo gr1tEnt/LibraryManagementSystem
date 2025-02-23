@@ -59,10 +59,10 @@ public class InputValidator {
         return (isbn.length() == 10 || isbn.length() == 13 && isbn.chars().allMatch(Character::isDigit));
     }
 
-    public int getValidIntOptions(String message) {
+    public int getValidIntOptions() {
         int value;
         while (true) {
-            System.out.println(message);
+            System.out.println("Enter value: ");
             if (scanner.hasNextInt()) {
                 value = scanner.nextInt();
                 scanner.nextLine();
@@ -75,9 +75,9 @@ public class InputValidator {
         return value;
     }
 
-    public Status getValidStatusOptions(String message) {
+    public Status getValidStatusOptions() {
         while (true) {
-            System.out.println(message);
+            System.out.println("Enter status: ");
             String statusInput = scanner.nextLine().toUpperCase().trim();
             try {
                 return Status.valueOf(statusInput);
@@ -159,6 +159,17 @@ public class InputValidator {
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid location. Please try again.");
             }
+        }
+    }
+
+    public String getValidStringOptions(String message) {
+        while (true) {
+            System.out.println(message);
+            String input = scanner.nextLine();
+            if (!input.isEmpty()) {
+                return input;
+            }
+            System.out.println("This value cannot be empty.");
         }
     }
 

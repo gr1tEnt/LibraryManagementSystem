@@ -61,34 +61,6 @@ public class LibraryMenu {
         }
     }
 
-/*    private void updateBook() {
-        System.out.println("1. Update isbn");
-        System.out.println("2. Update title");
-        System.out.println("3. Update authors");
-        System.out.println("4. Update publisher");
-        System.out.println("5. Update year");
-        System.out.println("6. Update category");
-        System.out.println("7. Update number of copies");
-        System.out.println("8. Update shelf location");
-        System.out.println("9. Update status");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (choice) {
-            case 1 -> updateBookServiceController.updateIsbn();
-            case 2 -> updateBookServiceController.updateTitle();
-            case 3 -> updateBookServiceController.updateAuthors();
-            case 4 -> updateBookServiceController.updatePublisher();
-            case 5 -> updateBookServiceController.updateYear();
-            case 6 -> updateBookServiceController.updateCategory();
-            case 7 -> updateBookServiceController.updateNumberOfCopies();
-            case 8 -> updateBookServiceController.updateShelfLocation();
-            case 9 -> updateBookServiceController.updateStatus();
-        }
-    }*/
-
-
 //Search by Properties in development
     private static void searchBooks(Scanner scanner) {
         System.out.println("\nBook Search by Properties");
