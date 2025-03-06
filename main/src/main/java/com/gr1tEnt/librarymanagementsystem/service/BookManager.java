@@ -3,6 +3,7 @@ package com.gr1tEnt.librarymanagementsystem.service;
 import com.gr1tEnt.librarymanagementsystem.model.*;
 import com.gr1tEnt.librarymanagementsystem.utils.InputValidator;
 
+import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
@@ -85,6 +86,23 @@ public class BookManager implements BookManagerInterface {
     public void trackCopies() {
         UUID bookId = inputValidator.getValidId();
         bookService.trackBookCopies(bookId);
+    }
+
+    public Set<String> getValidAuthors() {
+        Set<String> authors = new HashSet<>();
+        while (true) {
+            System.out.println("Enter author (type 'done' to finish):");
+            String input = scanner.nextLine().trim();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            if (!input.isEmpty()) {
+                authors.add(input);
+            } else {
+                System.out.println("Author name cannot be empty. Please try again.");
+            }
+        }
+        return authors;
     }
 
 }

@@ -1,15 +1,12 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
-import com.gr1tEnt.librarymanagementsystem.model.BookColumn;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.time.Year;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.UUID;
 
 public class InputValidator {
@@ -21,7 +18,16 @@ public class InputValidator {
         this.bookService = bookService;
     }
 
-    public UUID getValidId() {
+    public boolean getValidUuid(String input) {
+        try {
+            UUID.fromString(input);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+/*    public UUID getValidId() {
         UUID value = null;
         while (value == null) {
             System.out.println("Enter book's ID: ");
@@ -39,130 +45,57 @@ public class InputValidator {
             }
         }
         return value;
-    }
+    }*/
 
-    // I'll improve this method later, cuz it requires pattern knowledge
-    public String getValidIsbnOptions() {
-        while (true) {
-            System.out.println("Enter ISBN (10-13 digits: )");
-            String input = scanner.nextLine().trim();
-
-            if (isValidIsbn(input)) {
-                return input;
-            } else {
-                System.out.println("Invalid ISBN. Please try again.");
-            }
-        }
-    }
-
-    private boolean isValidIsbn(String isbn) {
+    public boolean getValidIsbn(String isbn) {
         return (isbn.length() == 10 || isbn.length() == 13) && isbn.chars().allMatch(Character::isDigit);
     }
 
-    public int getValidIntOptions() {
-        int value;
-        while (true) {
-            System.out.println("Enter value: ");
-            if (scanner.hasNextInt()) {
-                value = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scanner.nextLine();
-            }
-        }
-        return value;
-    }
-
-    public Status getValidStatusOptions() {
-        while (true) {
-            System.out.println("Enter status: ");
-            String statusInput = scanner.nextLine().toUpperCase().trim();
-            try {
-                return Status.valueOf(statusInput);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid status. Please enter one of: Available, Borrowed, Reserved, Lost, Damaged.");
-            }
+    public boolean getValidInt(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
-    public Set<String> getValidAuthorsOptions() {
-        Set<String> authors = new HashSet<>();
-        while (true) {
-            System.out.println("Enter author (type 'done' to finish):");
-            String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("done")) {
-                break;
-            }
-            if (!input.isEmpty()) {
-                authors.add(input);
-            } else {
-                System.out.println("Author name cannot be empty. Please try again.");
-            }
-        }
-        return authors;
-    }
-
-    public Category getValidCategoryOptions() {
-        while (true) {
-            System.out.println("Enter category. Available categories: ");
-            for (Category category : Category.values()) {
-                System.out.println(category + " ");
-            }
-            System.out.println("Enter a category: ");
-
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return Category.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid category. Please try again.");
-            }
+    public boolean isValidStatus() {
+        String statusInput = scanner.nextLine().toUpperCase().trim();
+        try {
+            Status.valueOf(statusInput);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 
-    public int getValidYearOptions() {
-        int newPublicationYear;
+    public boolean getValidCategory(String categoryInput) {
+        try {
+            Category.valueOf(categoryInput.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public boolean getValidYear(int year) {
         int currentYear = Year.now().getValue();
         int minYear = 1450;
 
-        while (true) {
-            System.out.println("Enter publication year (" + minYear + " - " + currentYear + "); ");
+        return year <= currentYear && year >= minYear;
+    }
 
-            if (scanner.hasNextInt()) {
-                newPublicationYear = scanner.nextInt();
-                scanner.nextLine();
-                if (newPublicationYear >= minYear && newPublicationYear <= currentYear) {
-                    return newPublicationYear;
-                } else {
-                    System.out.println("Invalid year. Please enter a valid year between " + minYear + " and " + currentYear);
-                }
-
-            } else {
-                System.out.println("Invalid input. Please enter a valid publication year.");
-                scanner.nextLine();
-            }
+    public boolean getValidShelfLocation(String shelfLocationInput) {
+        try {
+            ShelfLocation.valueOf(shelfLocationInput.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 
-    public ShelfLocation getValidShelfLocationOptions() {
-        while (true) {
-            System.out.println("Enter shelf location. Available locations: ");
-            for (ShelfLocation shelfLocation : ShelfLocation.values()) {
-                System.out.println(shelfLocation + " ");
-            }
-            System.out.println("Enter a location: ");
-
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return ShelfLocation.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid location. Please try again.");
-            }
-        }
-    }
-
-    public String getValidStringOptions(String message) {
+/*    public String getValidStringOptions(String message) {
         while (true) {
             System.out.println(message);
             String input = scanner.nextLine();
@@ -171,24 +104,6 @@ public class InputValidator {
             }
             System.out.println("This value cannot be empty.");
         }
-    }
-
-    public BookColumn getValidBookColumnOptions() {
-        while (true) {
-            System.out.println("Enter book's column. Available locations: ");
-
-            for (BookColumn bookColumn : BookColumn.values()) {
-                System.out.println(bookColumn + " ");
-            }
-            System.out.println("Enter book's column: ");
-            String input = scanner.nextLine().trim().toUpperCase();
-
-            try {
-                return BookColumn.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid column. Please try again.");
-            }
-        }
-    }
+    }*/
 
 }
