@@ -1,5 +1,6 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
+import com.gr1tEnt.librarymanagementsystem.model.BookColumn;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
@@ -18,40 +19,29 @@ public class InputValidator {
         this.bookService = bookService;
     }
 
-    public boolean getValidUuid(String input) {
+    public boolean isValidUuid(String uuidInput) {
         try {
-            UUID.fromString(input);
+            UUID.fromString(uuidInput);
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-/*    public UUID getValidId() {
-        UUID value = null;
-        while (value == null) {
-            System.out.println("Enter book's ID: ");
-            String input = scanner.nextLine();
-
-            try {
-                value = UUID.fromString(input);
-
-                if (!bookService.isBookExists(value)) {
-                    System.out.println("Book with ID " + value + " doesn't exist. Please enter a valid ID.");
-                    value = null;
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid input. Please enter a valid UUID.");
-            }
+    public boolean isValidBookColumn(String column) {
+        try {
+            BookColumn.valueOf(column.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
-        return value;
-    }*/
-
-    public boolean getValidIsbn(String isbn) {
-        return (isbn.length() == 10 || isbn.length() == 13) && isbn.chars().allMatch(Character::isDigit);
     }
 
-    public boolean getValidInt(String input) {
+    public boolean isValidIsbn(String isbnInput) {
+        return (isbnInput.length() == 10 || isbnInput.length() == 13) && isbnInput.chars().allMatch(Character::isDigit);
+    }
+
+    public boolean isValidInt(String input) {
         try {
             Integer.parseInt(input);
             return true;
@@ -60,17 +50,16 @@ public class InputValidator {
         }
     }
 
-    public boolean isValidStatus() {
-        String statusInput = scanner.nextLine().toUpperCase().trim();
+    public boolean isValidStatus(String statusInput) {
         try {
-            Status.valueOf(statusInput);
+            Status.valueOf(statusInput.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-    public boolean getValidCategory(String categoryInput) {
+    public boolean isValidCategory(String categoryInput) {
         try {
             Category.valueOf(categoryInput.toUpperCase());
             return true;
@@ -79,14 +68,14 @@ public class InputValidator {
         }
     }
 
-    public boolean getValidYear(int year) {
+    public boolean isValidYear(int year) {
         int currentYear = Year.now().getValue();
         int minYear = 1450;
 
         return year <= currentYear && year >= minYear;
     }
 
-    public boolean getValidShelfLocation(String shelfLocationInput) {
+    public boolean isValidShelfLocation(String shelfLocationInput) {
         try {
             ShelfLocation.valueOf(shelfLocationInput.toUpperCase());
             return true;
@@ -94,16 +83,4 @@ public class InputValidator {
             return false;
         }
     }
-
-/*    public String getValidStringOptions(String message) {
-        while (true) {
-            System.out.println(message);
-            String input = scanner.nextLine();
-            if (!input.isEmpty()) {
-                return input;
-            }
-            System.out.println("This value cannot be empty.");
-        }
-    }*/
-
 }
