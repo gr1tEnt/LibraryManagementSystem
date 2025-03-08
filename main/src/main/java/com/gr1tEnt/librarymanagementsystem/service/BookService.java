@@ -1,142 +1,154 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
+import com.gr1tEnt.librarymanagementsystem.database.DatabaseConnection;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
+import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
+import javax.xml.crypto.Data;
+import java.sql.*;
 import java.util.*;
 
 public class BookService {
-    private static final Map<Long, Book> books = new HashMap<>();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final List<Book> books = new ArrayList<>();
+    private final Connection conn;
 
-
-    public static Book addBook(Long id, String isbn, String title, String publisher) {
-        Set<String> authors = getValidAuthors();
-        int publicationYear = getValidYear();
-        Category category = getValidCategory();
-
-        if (books.containsKey(id)) {
-            throw new IllegalArgumentException("Book with ID " + id + " already exists");
-        }
-
-        Book book = new Book(id, isbn, title, authors, publisher, publicationYear, category);
-        books.put(id, book);
-        return book;
+    public BookService(Connection conn) {
+        this.conn = conn;
     }
 
-    public static boolean removeBook(Long id) {
-        if (books.containsKey(id)) {
-            Book removedBook = books.remove(id);
-            System.out.println("Book removed " + removedBook);
-            return true;
-        } else {
-            System.out.println("Invalid book's ID. Please try again");
-            return false;
+    public boolean addBook(Book book) {
+        String sql = "INSERT INTO books (id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelf_location, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, book.getId().toString());
+            stmt.setString(2, book.getIsbn());
+            stmt.setString(3, book.getTitle());
+            stmt.setString(4, book.getAuthors().toString());
+            stmt.setString(5, book.getPublisher());
+            stmt.setInt(6, book.getPublicationYear());
+            stmt.setString(7, book.getCategory().name());
+            stmt.setInt(8, book.getNumberOfCopies());
+            stmt.setString(9, book.getShelfLocation().name());
+            stmt.setString(10, book.getStatus().name());
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static Map<Long, Book> getAllBooks() {
+    public boolean removeBook(UUID bookId) {
+        String sql = "DELETE FROM books WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, bookId.toString());
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Book> getAllBooks() {
+        String sql = "SELECT id, isbn, title, authors, publisher, publication_year, category, number_of_copies, shelf_location, status FROM books";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Book book = new Book(
+                        UUID.fromString(rs.getString("id")),
+                        rs.getString("isbn"),
+                        rs.getString("title"),
+                        Collections.singleton(rs.getString("authors")),
+                        rs.getString("publisher"),
+                        rs.getInt("publication_year"),
+                        Category.valueOf(rs.getString("category")),
+                        rs.getInt("number_of_copies"),
+                        ShelfLocation.valueOf(rs.getString("shelf_location")),
+                        Status.valueOf(rs.getString("status"))
+                );
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return books;
     }
 
-    public static Book updateBookStatus(Long id, Status newStatus) {
-        Book book = books.get(id);
-        if (book != null) {
-            book.setStatus(newStatus);
-            return book;
-        } else {
-            return null;
+    public boolean updateBookField(UUID bookId, String bookColumn, Object newValue) {
+        String sql = "UPDATE books SET " + bookColumn + " = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, String.valueOf(newValue));
+            stmt.setString(2, String.valueOf(bookId));
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void updateBook(long bookId, String newIsbn, String newTitle, String newPublisher) {
-        Set<String> authors = getValidAuthors();
-        int publicationYear = getValidYear();
-        Category category = getValidCategory();
+    public void trackBookCopies(UUID bookId) {
+        String sql = "SELECT number_of_copies FROM books WHERE id = ?";
 
-        if (books.containsKey(bookId)) {
-            Book updatedBook = new Book(newIsbn, newTitle, authors, newPublisher, publicationYear, category);
-            books.replace(bookId, updatedBook);
-            System.out.println("Book has been updated: " + updatedBook);
-        } else {
-            System.out.println("Book with ID " + bookId + " not found");
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, bookId.toString());
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int copies = rs.getInt("number_of_copies");
+                    System.out.println("Number of copies: " + copies);
+                } else {
+                    System.out.println("No book found with ID " + bookId);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public static void trackBookCopies(Long bookId, int quantityOfCopies) {
-        Book book = books.get(bookId);
+    public void printAllBooks() {
+        List<Book> books = getAllBooks();
 
-        if (book != null) {
-            book.setNumberOfCopies(quantityOfCopies);
-            System.out.println("Number of copies has benn updated: " + book);
-        } else {
-            System.out.println("Book with ID " + bookId + " not found.");
-        }
-
-    }
-
-    public static void printAllBooks(Map<Long, Book> books) {
-        if (books.isEmpty()) {
+        if (books == null || books.isEmpty()) {
             System.out.println("No books available in the library.");
         } else {
             System.out.println("Listing all books: ");
-            for (Book book : books.values()) {
+            for (Book book : books) {
                 System.out.println(book);
             }
         }
     }
 
-    public static Set<String> getValidAuthors() {
-        Set<String> authors = new HashSet<>();
-        while (true) {
-            System.out.println("Enter author (type 'done' to finish):");
-            String input = scanner.nextLine().trim();
-            if (input.equalsIgnoreCase("done")) {
-                break;
+    public boolean isBookExists(UUID bookId) {
+        String sql = "SELECT COUNT(*) FROM books WHERE id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, bookId.toString());
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
             }
-            if (!input.isEmpty()) {
-                authors.add(input);
-            } else {
-                System.out.println("Author name cannot be empty. Please try again.");
-            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return authors;
-    }
-
-    public static Category getValidCategory() {
-        while (true) {
-            System.out.println("Enter category. Available categories: ");
-            for (Category category : Category.values()) {
-                System.out.println(category + " ");
-            }
-            System.out.println("Enter a category: ");
-
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                return Category.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid category. Please try again.");
-            }
-        }
-    }
-
-    public static int getValidYear() {
-        int newPublicationYear;
-        while (true) {
-            System.out.println("Enter publication year: ");
-            if (scanner.hasNextInt()) {
-                newPublicationYear = scanner.nextInt();
-                scanner.nextLine();
-                return newPublicationYear;
-            } else {
-                System.out.println("Invalid input. Please enter a valid publication year.");
-                scanner.nextLine();
-            }
-        }
-    }
-
-    public static boolean bookExists(Long id) {
-        return books.containsKey(id);
+        return false;
     }
 }

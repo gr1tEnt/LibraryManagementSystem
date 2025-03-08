@@ -3,15 +3,17 @@ package com.gr1tEnt.librarymanagementsystem.menu;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
-import com.gr1tEnt.librarymanagementsystem.service.IBookManagementSystem;
+import com.gr1tEnt.librarymanagementsystem.service.BookManagerInterface;
 
 public class LibraryMenu {
-    private final IBookManagementSystem bookManagementSystem;
+    private final BookManagerInterface bookServiceController;
+    private final BookService bookService;
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public LibraryMenu(IBookManagementSystem bookManagementSystem) {
-        this.bookManagementSystem = bookManagementSystem;
+    public LibraryMenu(BookManagerInterface bookManagementSystem, BookService bookService) {
+        this.bookServiceController = bookManagementSystem;
+        this.bookService = bookService;
     }
 
     public void start() {
@@ -35,29 +37,26 @@ public class LibraryMenu {
         } while (choice != 6);
     }
 
-    public void bookManagement(){
+    public void bookManagement() {
         System.out.println("\nBook Management");
         System.out.println("1. Add new books");
         System.out.println("2. Update book information");
         System.out.println("3. Remove books");
         System.out.println("4. Track book copies");
-        System.out.println("5. Set new status");
-        System.out.println("6. Show all books");
+        System.out.println("5. Show all books");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
 
         switch (choice) {
-            case 1 -> bookManagementSystem.addNewBook();
-            case 2 -> bookManagementSystem.updateBook();
-            case 3 -> bookManagementSystem.removeBook();
-            case 4 -> bookManagementSystem.trackCopies();
-            case 5 -> bookManagementSystem.updateStatus();
-            case 6 -> BookService.printAllBooks(BookService.getAllBooks());
+            case 1 -> bookServiceController.addNewBook();
+            case 2 -> bookServiceController.updateBookField();
+            case 3 -> bookServiceController.removeBookById();
+            case 4 -> bookServiceController.trackCopies();
+            case 5 -> bookService.printAllBooks();
             default -> System.out.println("Incorrect choice.");
         }
     }
-
 
 //Search by Properties in development
     private static void searchBooks(Scanner scanner) {
