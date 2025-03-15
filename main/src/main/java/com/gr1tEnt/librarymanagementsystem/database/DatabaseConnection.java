@@ -1,21 +1,33 @@
 package com.gr1tEnt.librarymanagementsystem.database;
-import io.github.cdimascio.dotenv.Dotenv;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DatabaseConnection {
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final String CONFIG_FILE = "conf/config.properties";
+    private static final Properties properties = new Properties();
 
-    private static final String URL = dotenv.get("DB_URL");
-    private static final String USER = dotenv.get("DB_USER");
-    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
+    static {
+        try(FileInputStream inputStream = new FileInputStream(CONFIG_FILE)) {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            System.err.println("Error loading configuration file: " + e.getMessage());
+        }
+    }
+
+    private static final String URL = properties.getProperty("db.url");
+    private static final String USER = properties.getProperty("db.username");
+    private static final String PASSWORD = properties.getProperty("db.password");
 
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
+            System.err.println("Error while connecting to the database" + e.getMessage());
             throw new RuntimeException();
         }
     }
