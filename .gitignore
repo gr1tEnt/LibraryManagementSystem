@@ -119,3 +119,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+conf/config.properties
