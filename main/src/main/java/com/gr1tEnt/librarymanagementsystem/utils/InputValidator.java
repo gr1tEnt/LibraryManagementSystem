@@ -38,7 +38,25 @@ public class InputValidator {
     }
 
     public boolean isValidIsbn(String isbnInput) {
-        return (isbnInput.length() == 10 || isbnInput.length() == 13) && isbnInput.chars().allMatch(Character::isDigit);
+        if (isbnInput.length() == 10) {
+            // Regex for ISBN-10 (9 digits + 1 digit or 'X')
+            String regex10 = "[0-9]{9}[0-9X]$";
+            if (isbnInput.matches(regex10)) {
+                int sum = 0;
+                for (int i = 0; i < 9; i++) {
+                    sum += (isbnInput.charAt(i) - '0') * (i + 1);
+                }
+
+                // Handle the last char, which could be 'X' or a digit
+                char lastChar = isbnInput.charAt(0);
+                if (lastChar == 'X') {
+                    sum += 10 * 10;
+                } else {
+                    sum += (lastChar - '0') * 10;
+                }
+                return sum % 11 == 0;
+            }
+        }
     }
 
     public boolean isValidInt(String input) {
