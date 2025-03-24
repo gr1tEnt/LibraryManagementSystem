@@ -40,7 +40,7 @@ public class InputValidator {
     public boolean isValidIsbn(String isbnInput) {
         if (isbnInput.length() == 10) {
             // Regex for ISBN-10 (9 digits + 1 digit or 'X')
-            String regex10 = "[0-9]{9}[0-9X]$";
+            String regex10 = "^[0-9]{9}[0-9X]$";
             if (isbnInput.matches(regex10)) {
                 int sum = 0;
                 for (int i = 0; i < 9; i++) {
@@ -48,7 +48,7 @@ public class InputValidator {
                 }
 
                 // Handle the last char, which could be 'X' or a digit
-                char lastChar = isbnInput.charAt(0);
+                char lastChar = isbnInput.charAt(9);
                 if (lastChar == 'X') {
                     sum += 10 * 10;
                 } else {
