@@ -16,7 +16,7 @@ public class Main {
         Connection connection = DatabaseConnection.getConnection();
         BookService bookService = new BookService(connection);
         InputValidator inputValidator = new InputValidator(scanner, bookService);
-        BookManagerInterface bookManagementSystem  = new BookManager(bookService, scanner, inputValidator);
+        BookManagerInterface bookManagementSystem  = new BookManager();
         LibraryMenu menu = new LibraryMenu(bookManagementSystem, bookService);
 
         menu.start();

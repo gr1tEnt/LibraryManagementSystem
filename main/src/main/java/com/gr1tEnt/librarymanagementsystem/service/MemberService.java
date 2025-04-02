@@ -46,13 +46,13 @@ public class MemberService {
         }
     }
 
-    public boolean updateMembershipType(UUID bookId, MembershipType newMembershipType) {
+    public boolean updateMembershipType(UUID memberId, MembershipType newMembershipType) {
         String sql = "UPDATE members SET membership_type " + "= ? WHERE id = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, String.valueOf(newMembershipType));
-            stmt.setString(2, String.valueOf(bookId));
+            stmt.setString(2, String.valueOf(memberId));
 
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
