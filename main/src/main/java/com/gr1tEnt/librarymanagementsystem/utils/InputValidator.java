@@ -1,10 +1,8 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
-import com.gr1tEnt.librarymanagementsystem.model.BookColumn;
-import com.gr1tEnt.librarymanagementsystem.model.Category;
-import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
-import com.gr1tEnt.librarymanagementsystem.model.Status;
+import com.gr1tEnt.librarymanagementsystem.model.*;
 import com.gr1tEnt.librarymanagementsystem.service.BookService;
+import com.gr1tEnt.librarymanagementsystem.service.MemberManager;
 
 import java.time.Year;
 import java.util.Scanner;
@@ -78,6 +76,15 @@ public class InputValidator {
     public boolean isValidShelfLocation(String shelfLocationInput) {
         try {
             ShelfLocation.valueOf(shelfLocationInput.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public boolean isValidMembershipType(String membershipType) {
+        try {
+            MembershipType.valueOf(membershipType.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             return false;

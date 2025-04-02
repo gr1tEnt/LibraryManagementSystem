@@ -1,6 +1,7 @@
 package com.gr1tEnt.librarymanagementsystem.utils;
 
 import com.gr1tEnt.librarymanagementsystem.model.Category;
+import com.gr1tEnt.librarymanagementsystem.model.MembershipType;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
@@ -133,6 +134,17 @@ public class InputHelper {
             }
         }
         return authors;
+    }
+
+    public MembershipType getValidMembershipType() {
+        while (true) {
+            System.out.println("Enter membership type: ");
+            String input = scanner.nextLine().trim();
+            if (inputValidator.isValidMembershipType(input)) {
+                return MembershipType.valueOf(input);
+            }
+            System.out.println("Invalid membership type. Please try again.");
+        }
     }
 
 }
