@@ -9,10 +9,14 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class MemberManager implements MemberManagerInterface {
-    private Scanner scanner;
-    private MemberService memberService;
-    private InputValidator inputValidator;
-    private InputHelper inputHelper;
+    private final Scanner scanner = new Scanner(System.in);
+    private final MemberService memberService;
+    private final InputHelper inputHelper;
+
+    public MemberManager(MemberService memberService, InputHelper inputHelper) {
+        this.memberService = memberService;
+        this.inputHelper = inputHelper;
+    }
 
     @Override
     public void addNewMember() {
