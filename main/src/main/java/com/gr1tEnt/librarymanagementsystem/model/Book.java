@@ -1,19 +1,51 @@
 package com.gr1tEnt.librarymanagementsystem.model;
+import jakarta.persistence.*;
+
 import java.util.Set;
 import java.util.UUID;
 
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @Column(name = "id")
     private UUID id = UUID.randomUUID();
+
+    @Column(name = "isbn")
     private String isbn;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "authors")
     private Set<String> authors;
+
+    @Column(name = "publisher")
     private String publisher;
+
+    @Column(name = "publication_year")
     private int publicationYear;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
     private Category category;
+
+    @Column(name = "number_of_copies")
     private int numberOfCopies;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "shelf_location")
     private ShelfLocation shelfLocation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
 
+    // Constructor for JPA
+    public Book() {
+    }
+
+    // Constructor for adding a book
     public Book(String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
         this.isbn = isbn;
         this.title = title;
@@ -26,6 +58,7 @@ public class Book {
         this.status = status;
     }
 
+    // Constructor for retrieving a book
     public Book(UUID id, String isbn, String title, Set<String> authors, String publisher, int publicationYear, Category category, int numberOfCopies, ShelfLocation shelfLocation, Status status) {
         this.id = id;
         this.isbn = isbn;
