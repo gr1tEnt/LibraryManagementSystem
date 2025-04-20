@@ -1,12 +1,10 @@
 package com.gr1tEnt.librarymanagementsystem.service;
 
-import com.gr1tEnt.librarymanagementsystem.database.DatabaseConnection;
 import com.gr1tEnt.librarymanagementsystem.model.Book;
 import com.gr1tEnt.librarymanagementsystem.model.Category;
 import com.gr1tEnt.librarymanagementsystem.model.ShelfLocation;
 import com.gr1tEnt.librarymanagementsystem.model.Status;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.*;
 
