@@ -14,7 +14,8 @@ import java.util.UUID;
 public class Transaction {
     @Id
     @Column(name = "transaction_id")
-    private UUID transactionId = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID transactionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

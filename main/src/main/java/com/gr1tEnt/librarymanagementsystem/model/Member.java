@@ -19,7 +19,8 @@ import java.util.UUID;
 public class Member {
     @Id
     @Column(name = "member_id")
-    private UUID memberId = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID memberId;
 
     @Column(name = "name")
     private String name;

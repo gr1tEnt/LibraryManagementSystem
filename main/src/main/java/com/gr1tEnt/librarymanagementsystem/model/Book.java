@@ -14,7 +14,8 @@ import java.util.UUID;
 public class Book {
     @Id
     @Column(name = "id")
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "isbn")
     private String isbn;
