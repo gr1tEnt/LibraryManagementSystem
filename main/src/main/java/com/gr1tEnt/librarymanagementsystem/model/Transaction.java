@@ -13,16 +13,16 @@ import java.util.UUID;
 @ToString
 public class Transaction {
     @Id
-    @Column(name = "transaction_id")
+    @Column(name = "transaction_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID transactionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     @Enumerated(EnumType.STRING)
