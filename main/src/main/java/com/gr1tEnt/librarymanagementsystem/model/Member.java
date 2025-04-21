@@ -18,21 +18,21 @@ import java.util.UUID;
 @ToString
 public class Member {
     @Id
-    @Column(name = "member_id")
+    @Column(name = "member_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID memberId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "contact_info")
     private String contactInfo; // Could be phone/email
 
-    @Column(name = "membership_type")
+    @Column(name = "membership_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private MembershipType membershipType = MembershipType.GUEST;
 
-    @Column(name = "join_date")
+    @Column(name = "join_date", nullable = false)
     private LocalDate joinDate = LocalDate.now();
 
     @OneToMany(mappedBy = "member_id") // member_id from transactions
