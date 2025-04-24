@@ -35,7 +35,7 @@ public class Member {
     @Column(name = "join_date", nullable = false)
     private LocalDate joinDate = LocalDate.now();
 
-    @OneToMany(mappedBy = "member_id", fetch = FetchType.LAZY) // member_id from transactions
+    @OneToMany(mappedBy = "transactionId", fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
     // Constructor for creating a mew member
