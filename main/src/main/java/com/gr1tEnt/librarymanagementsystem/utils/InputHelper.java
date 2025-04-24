@@ -11,8 +11,12 @@ import java.util.Set;
 import java.util.UUID;
 
 public class InputHelper {
-    private Scanner scanner;
-    private InputValidator inputValidator;
+    private final Scanner scanner = new Scanner(System.in);
+    private final InputValidator inputValidator;
+
+    public InputHelper(InputValidator inputValidator) {
+        this.inputValidator = inputValidator;
+    }
 
     public String getValidStringInput(String message) {
         while (true) {

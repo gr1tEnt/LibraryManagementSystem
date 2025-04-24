@@ -4,7 +4,9 @@ import com.gr1tEnt.librarymanagementsystem.service.BookService;
 
 import java.util.*;
 import com.gr1tEnt.librarymanagementsystem.service.BookManagerInterface;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LibraryMenu {
     private final BookManagerInterface bookServiceController;
     private final BookService bookService;

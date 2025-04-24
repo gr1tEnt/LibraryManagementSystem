@@ -121,3 +121,5 @@ bin/
 .DS_Store
 
 conf/config.properties
+
+main/src/main/resources/META-INF/application.properties

@@ -7,8 +7,13 @@ import java.util.Set;
 import java.util.UUID;
 
 public class BookManager implements BookManagerInterface {
-    private BookService bookService;
-    private InputHelper inputHelper;
+    private final BookService bookService;
+    private final InputHelper inputHelper;
+
+    public BookManager(BookService bookService, InputHelper inputHelper) {
+        this.bookService = bookService;
+        this.inputHelper = inputHelper;
+    }
 
     @Override
     public void addNewBook() {

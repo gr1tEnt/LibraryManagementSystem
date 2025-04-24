@@ -1,57 +1,46 @@
 package com.gr1tEnt.librarymanagementsystem.model;
 
-import java.sql.Date;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "members")
+@NoArgsConstructor // Constructor for JPA
+@Getter
+@Setter
+@ToString
 public class Member {
-    private UUID memberId = UUID.randomUUID();
+    @Id
+    @Column(name = "member_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID memberId;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "contact_info")
     private String contactInfo; // Could be phone/email
+
+    @Column(name = "membership_type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private MembershipType membershipType = MembershipType.GUEST;
+
+    @Column(name = "join_date", nullable = false)
     private LocalDate joinDate = LocalDate.now();
-    private Set<Transaction> transactions;
+
+    @OneToMany(mappedBy = "transactionId", fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
     // Constructor for creating a mew member
     public Member(String name, String contactInfo) {
         this.name = name;
         this.contactInfo = contactInfo;
-    }
-
-    public UUID getMemberId() {
-        return memberId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getContactInfo() {
-        return contactInfo;
-    }
-
-    public MembershipType getMembershipType() {
-        return membershipType;
-    }
-
-    public LocalDate getJoinDate() {
-        return joinDate;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    @Override
-    public String toString() {
-        return "Member{" +
-                "memberId=" + memberId +
-                ", name='" + name + '\'' +
-                ", contactInfo='" + contactInfo + '\'' +
-                ", membershipType=" + membershipType +
-                ", joinDate=" + joinDate +
-                ", transactions=" + transactions +
-                '}';
     }
 }
