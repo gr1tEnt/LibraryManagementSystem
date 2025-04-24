@@ -122,4 +122,4 @@ bin/
 
 conf/config.properties
 
-main/src/main/resources/META-INF/persistence.xml
+main/src/main/resources/META-INF/application.properties
